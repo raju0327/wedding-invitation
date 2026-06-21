@@ -1,7 +1,7 @@
 // --- Google Sheets Configuration ---
 // Paste your Google Apps Script Web App URL below (e.g. "https://script.google.com/macros/s/AKfycb.../exec")
 // If left blank, the website will automatically use browser LocalStorage for demonstration.
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRCoHXiK26Nd_cDXtnpZJgCW-bi2eXOq_-YThA1PS-d9rupVrVv932C0gAKc6sAtIg/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzLo97TVmDtJ2f1H3QehtKmu4ai0NlqkTiJr20g4UJYOtZ2Aqgb_qKDMaB5z0pDVoU/exec";
 
 // --- Custom Ambient Audio Synthesizer (Web Audio API) ---
 // Plays a soft, romantic arpeggio progression to simulate background music.
