@@ -513,7 +513,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // If Google Sheet is configured, fetch global wishes
     if (GOOGLE_SCRIPT_URL) {
-      fetch(GOOGLE_SCRIPT_URL)
+      const fetchUrl = GOOGLE_SCRIPT_URL + (GOOGLE_SCRIPT_URL.includes('?') ? '&' : '?') + 't=' + Date.now();
+      fetch(fetchUrl)
         .then(response => {
           if (!response.ok) throw new Error('Network error');
           return response.json();
