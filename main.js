@@ -1,3 +1,8 @@
+// --- Google Sheets Configuration ---
+// Paste your Google Apps Script Web App URL below (e.g. "https://script.google.com/macros/s/AKfycb.../exec")
+// If left blank, the website will automatically use browser LocalStorage for demonstration.
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRCoHXiK26Nd_cDXtnpZJgCW-bi2eXOq_-YThA1PS-d9rupVrVv932C0gAKc6sAtIg/exec";
+
 // --- Custom Ambient Audio Synthesizer (Web Audio API) ---
 // Plays a soft, romantic arpeggio progression to simulate background music.
 class AmbientSynth {
@@ -8,7 +13,7 @@ class AmbientSynth {
     this.currentChordIdx = 0;
     this.delayNode = null;
     this.filterNode = null;
-    
+
     // Chord progression (Root, third, fifth, seventh, octaves)
     this.chords = [
       [130.81, 164.81, 196.00, 246.94, 261.63, 329.63], // Cmaj7
@@ -21,7 +26,7 @@ class AmbientSynth {
   init() {
     if (this.ctx) return;
     this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-    
+
     // Set up low pass filter for soft tone
     this.filterNode = this.ctx.createBiquadFilter();
     this.filterNode.type = 'lowpass';
@@ -31,10 +36,10 @@ class AmbientSynth {
     // Set up delay/echo effect for spacey/romantic vibe
     this.delayNode = this.ctx.createDelay(1.0);
     this.delayNode.delayTime.setValueAtTime(0.4, this.ctx.currentTime);
-    
+
     this.delayFeedback = this.ctx.createGain();
     this.delayFeedback.gain.setValueAtTime(0.4, this.ctx.currentTime);
-    
+
     this.delayGain = this.ctx.createGain();
     this.delayGain.gain.setValueAtTime(0.25, this.ctx.currentTime);
 
@@ -52,41 +57,41 @@ class AmbientSynth {
 
   playNote(frequency, startTime, duration) {
     if (!this.ctx) return;
-    
+
     const osc = this.ctx.createOscillator();
     const gainNode = this.ctx.createGain();
-    
+
     osc.type = 'triangle';
     osc.frequency.setValueAtTime(frequency, startTime);
-    
+
     // Soft volume envelope
     gainNode.gain.setValueAtTime(0, startTime);
     gainNode.gain.linearRampToValueAtTime(0.06, startTime + 0.1);
     gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
-    
+
     osc.connect(gainNode);
     gainNode.connect(this.filterNode);
-    
+
     osc.start(startTime);
     osc.stop(startTime + duration);
   }
 
   playArpeggio() {
     if (!this.isPlaying) return;
-    
+
     const now = this.ctx.currentTime;
     const chord = this.chords[this.currentChordIdx];
-    const noteTimeSpacing = 0.25; 
-    
+    const noteTimeSpacing = 0.25;
+
     const notesToPlay = [...chord, chord[4], chord[3], chord[2], chord[1]];
-    
+
     notesToPlay.forEach((freq, idx) => {
       this.playNote(freq, now + (idx * noteTimeSpacing), 1.8);
     });
 
     const totalChordDuration = notesToPlay.length * noteTimeSpacing;
     this.currentChordIdx = (this.currentChordIdx + 1) % this.chords.length;
-    
+
     this.timerId = setTimeout(() => this.playArpeggio(), totalChordDuration * 1000);
   }
 
@@ -110,7 +115,7 @@ class AmbientSynth {
 
 // --- Initialize Components ---
 document.addEventListener('DOMContentLoaded', () => {
-  
+
   // 0. Cover Invitation Open Animation
   const invitationCover = document.getElementById('invitation-cover');
   const openInvitationBtn = document.getElementById('open-invitation-btn');
@@ -121,18 +126,18 @@ document.addEventListener('DOMContentLoaded', () => {
   openInvitationBtn.addEventListener('click', () => {
     // Add opened class to cover overlay to trigger split animations
     invitationCover.classList.add('opened');
-    
+
     // Remove no-scroll from body to allow scroll
     document.body.classList.remove('no-scroll');
-    
+
     // Show navigation bar
     navbar.classList.remove('hidden');
     navbar.classList.add('visible');
-    
+
     // Play the ambient synthesizer background music automatically on user interaction
     ambientSynth.start();
     musicToggle.classList.add('playing');
-    
+
     // Remove cover overlay from display after animations finish (1.8 seconds)
     setTimeout(() => {
       invitationCover.style.display = 'none';
@@ -156,11 +161,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function handleRoute() {
     const hash = window.location.hash || '#home';
-    
+
     // Deactivate all page views and nav links
     pages.forEach(page => page.classList.remove('active'));
     navLinks.forEach(link => link.classList.remove('active'));
-    
+
     // Activate target page
     const activePage = document.querySelector(hash);
     if (activePage) {
@@ -169,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Fallback
       document.getElementById('home').classList.add('active');
     }
-    
+
     // Set active link highlight
     const activeLink = document.querySelector(`.nav-link[href="${hash}"]`);
     if (activeLink) {
@@ -177,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       document.querySelector('.nav-link[href="#home"]').classList.add('active');
     }
-    
+
     // Scroll view to top on navigate
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -262,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 3. Scroll Reveal Animations (for timeline items and local triggers)
   const revealElements = document.querySelectorAll('.reveal');
-  
+
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -324,9 +329,9 @@ document.addEventListener('DOMContentLoaded', () => {
     tab.addEventListener('click', (e) => {
       galleryTabs.forEach(t => t.classList.remove('active'));
       e.target.classList.add('active');
-      
+
       activeCategory = e.target.getAttribute('data-filter');
-      
+
       galleryItems.forEach(item => {
         const itemCat = item.getAttribute('data-category');
         if (activeCategory === 'all' || itemCat === activeCategory) {
@@ -335,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
           item.classList.add('hidden');
         }
       });
-      
+
       // Update indices for Lightbox
       reindexVisibleImages();
     });
@@ -348,7 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeBtn = document.querySelector('.lightbox-close');
   const prevBtn = document.querySelector('.lightbox-prev');
   const nextBtn = document.querySelector('.lightbox-next');
-  
+
   let currentImgIndex = 0;
   let visibleImagesData = []; // Populated dynamically based on category filtering
 
@@ -380,7 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
     lightboxImg.src = visibleImagesData[index].src;
     lightboxCaption.textContent = visibleImagesData[index].alt;
     lightbox.style.display = 'block';
-    document.body.style.overflow = 'hidden'; 
+    document.body.style.overflow = 'hidden';
   }
 
   function closeLightbox() {
@@ -443,7 +448,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const rsvpSuccessMsg = document.getElementById('rsvp-success');
   const successFeedbackText = document.getElementById('success-feedback-text');
   const editBtn = document.getElementById('rsvp-edit-btn');
-  
+
   const guestbookForm = document.getElementById('guestbook-form');
   const guestbookWall = document.getElementById('guestbook-wall');
 
@@ -472,31 +477,54 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Render wishes on the guestbook wall
   function renderGuestbook() {
-    // Read custom messages from LocalStorage
-    const customMessages = JSON.parse(localStorage.getItem('wedding_wishes')) || [];
-    
-    // Combine defaults and customs
-    const allWishes = [...defaultWishes, ...customMessages];
-    
-    // Clear wall
-    guestbookWall.innerHTML = '';
-    
-    allWishes.forEach((w, idx) => {
-      const note = document.createElement('div');
-      // Alternate watercolor splash themes
-      const colorTheme = idx % 2 === 0 ? 'note-emerald' : 'note-gold';
-      note.className = `guestbook-note glass-card ${colorTheme}`;
-      
-      note.innerHTML = `
-        <div class="note-inner-frame">
-          <div class="note-quote-icon top-quote"><i class="fa-solid fa-quote-left"></i></div>
-          <p class="note-message">${w.wishes}</p>
-          <div class="note-quote-icon bottom-quote"><i class="fa-solid fa-quote-right"></i></div>
-          <p class="note-author">— ${w.name}</p>
-        </div>
-      `;
-      guestbookWall.appendChild(note);
-    });
+    // Read local custom messages first as a fallback/immediate load
+    const localMessages = JSON.parse(localStorage.getItem('wedding_wishes')) || [];
+
+    // Clear wall and show loaded items
+    function displayWishes(customWishes) {
+      const allWishes = [...defaultWishes, ...customWishes];
+      guestbookWall.innerHTML = '';
+
+      allWishes.forEach((w, idx) => {
+        const note = document.createElement('div');
+        const colorTheme = idx % 2 === 0 ? 'note-emerald' : 'note-gold';
+        note.className = `guestbook-note glass-card ${colorTheme}`;
+
+        note.innerHTML = `
+          <div class="note-inner-frame">
+            <div class="note-quote-icon top-quote"><i class="fa-solid fa-quote-left"></i></div>
+            <p class="note-message">${w.wishes}</p>
+            <div class="note-quote-icon bottom-quote"><i class="fa-solid fa-quote-right"></i></div>
+            <p class="note-author">— ${w.name}</p>
+          </div>
+        `;
+        guestbookWall.appendChild(note);
+      });
+    }
+
+    // Display local wishes immediately
+    displayWishes(localMessages);
+
+    // If Google Sheet is configured, fetch global wishes
+    if (GOOGLE_SCRIPT_URL) {
+      fetch(GOOGLE_SCRIPT_URL)
+        .then(response => {
+          if (!response.ok) throw new Error('Network error');
+          return response.json();
+        })
+        .then(globalWishes => {
+          if (Array.isArray(globalWishes)) {
+            // Save a copy locally as cache
+            localStorage.setItem('wedding_wishes_cache', JSON.stringify(globalWishes));
+            displayWishes(globalWishes);
+          }
+        })
+        .catch(err => {
+          console.warn('Failed to fetch from Google Sheets, using cache:', err);
+          const cached = JSON.parse(localStorage.getItem('wedding_wishes_cache')) || localMessages;
+          displayWishes(cached);
+        });
+    }
   }
 
   // Initial load of guestbook
@@ -512,7 +540,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function showSuccessState(data) {
     rsvpForm.classList.add('hidden');
     rsvpSuccessMsg.classList.remove('hidden');
-    
+
     if (data.attendance === 'accept') {
       successFeedbackText.textContent = `We are thrilled that you are joining us! We have registered ${data.guests} attendee(s) under your name. See you at the celebrations!`;
     } else {
@@ -536,6 +564,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const wishes = document.getElementById('wishes').value;
 
     const rsvpData = {
+      type: 'rsvp',
       name,
       mobile,
       attendance,
@@ -545,27 +574,47 @@ document.addEventListener('DOMContentLoaded', () => {
       timestamp: new Date().toISOString()
     };
 
-    setTimeout(() => {
-      // Save RSVP details
+    function completeRSVPSubmission() {
+      // Save RSVP details locally
       localStorage.setItem('wedding_rsvp', JSON.stringify(rsvpData));
 
-      // If they left wishes/comments, automatically post it to the Guestbook wall!
+      // Save custom wish locally as well (if present)
       if (wishes.trim().length > 0) {
         const customMessages = JSON.parse(localStorage.getItem('wedding_wishes')) || [];
-        // Check if message is already posted to avoid double posting
         if (!customMessages.some(m => m.wishes === wishes && m.name === name)) {
-          customMessages.push({ name, wishes, timestamp: new Date().toISOString() });
+          customMessages.push({ name, wishes, timestamp: rsvpData.timestamp });
           localStorage.setItem('wedding_wishes', JSON.stringify(customMessages));
-          renderGuestbook();
         }
       }
 
-      btnText.textContent = 'Submit Response';
+      btnText.textContent = 'Send RSVP';
       btnLoader.classList.add('hidden');
       submitBtn.disabled = false;
 
       showSuccessState(rsvpData);
-    }, 1800);
+    }
+
+    if (GOOGLE_SCRIPT_URL) {
+      // Post to Google Sheets
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(rsvpData)
+      })
+        .then(() => {
+          completeRSVPSubmission();
+        })
+        .catch(err => {
+          console.error('Google Sheets RSVP failed, saving locally:', err);
+          completeRSVPSubmission();
+        });
+    } else {
+      // Simulate delay for feel, then save locally
+      setTimeout(() => {
+        completeRSVPSubmission();
+      }, 1500);
+    }
   });
 
   // Edit RSVP Handler
@@ -590,28 +639,64 @@ document.addEventListener('DOMContentLoaded', () => {
   // Handle Guestbook Form Submit (Posting directly from wall)
   guestbookForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    
+
     const name = document.getElementById('gb-name').value;
     const wishes = document.getElementById('gb-message').value;
-    
-    const customMessages = JSON.parse(localStorage.getItem('wedding_wishes')) || [];
-    customMessages.push({
+    const timestamp = new Date().toISOString();
+
+    const wishData = {
+      type: 'wish',
       name,
       wishes,
-      timestamp: new Date().toISOString()
-    });
-    
-    localStorage.setItem('wedding_wishes', JSON.stringify(customMessages));
-    
-    // Clear inputs
-    document.getElementById('gb-name').value = '';
-    document.getElementById('gb-message').value = '';
-    
-    // Render and scroll to wall
-    renderGuestbook();
-    
-    const wallHeader = document.querySelector('.wall-title');
-    wallHeader.scrollIntoView({ behavior: 'smooth' });
+      timestamp
+    };
+
+    const submitBtn = guestbookForm.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Posting...';
+    submitBtn.disabled = true;
+
+    function completeWishSubmission() {
+      // Save locally
+      const customMessages = JSON.parse(localStorage.getItem('wedding_wishes')) || [];
+      customMessages.push({ name, wishes, timestamp });
+      localStorage.setItem('wedding_wishes', JSON.stringify(customMessages));
+
+      // Clear inputs
+      document.getElementById('gb-name').value = '';
+      document.getElementById('gb-message').value = '';
+
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+
+      // Render and scroll to wall
+      renderGuestbook();
+
+      const wallHeader = document.querySelector('.wall-title');
+      wallHeader.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    if (GOOGLE_SCRIPT_URL) {
+      // Post to Google Sheets
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(wishData)
+      })
+        .then(() => {
+          // Wait 1 second for propagation, then refresh
+          setTimeout(() => {
+            completeWishSubmission();
+          }, 1000);
+        })
+        .catch(err => {
+          console.error('Google Sheets wish failed, saving locally:', err);
+          completeWishSubmission();
+        });
+    } else {
+      completeWishSubmission();
+    }
   });
 
 });
