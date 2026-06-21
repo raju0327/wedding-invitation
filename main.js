@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
-    
+
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
@@ -168,10 +168,10 @@ document.addEventListener('DOMContentLoaded', () => {
       reset(isInitial = false) {
         this.x = Math.random() * canvas.width;
         this.y = isInitial ? Math.random() * canvas.height : canvas.height + Math.random() * 30;
-        
+
         // 40% golden hearts, 60% standard gold dust particles
         this.type = Math.random() < 0.4 ? 'heart' : 'dust';
-        
+
         if (this.type === 'heart') {
           this.size = Math.random() * 8 + 6; // Volumetric size (6px to 14px)
           this.speedY = -(Math.random() * 0.45 + 0.2); // Slow upward float
@@ -184,12 +184,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         this.vx = this.speedX;
         this.vy = this.speedY;
-        
+
         this.baseOpacity = this.type === 'heart'
           ? (this.size / 14.0) * 0.35 + 0.15  // 0.15 to 0.5 opacity for hearts
           : (this.size / 3.0) * 0.4 + 0.1;    // 0.10 to 0.5 opacity for dust
         this.opacity = this.baseOpacity;
-        
+
         this.flickerSpeed = Math.random() * 0.015 + 0.005;
         this.flickerAngle = Math.random() * Math.PI * 2;
         this.swaySpeed = Math.random() * 0.01 + 0.005;
@@ -210,22 +210,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const dx = this.x - mouse.x;
         const dy = this.y - mouse.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
-        
+
         // Escape / evasion radius
         const minDistance = this.type === 'heart' ? 120 : 70;
-        
+
         if (distance < minDistance) {
           // Push vector away from cursor
           const forceDirectionX = dx / distance;
           const forceDirectionY = dy / distance;
-          
+
           // Evasion force is stronger when closer
           const maxForce = this.type === 'heart' ? 8.0 : 4.0;
           const force = (minDistance - distance) / minDistance;
-          
+
           const targetSpeedX = forceDirectionX * force * maxForce;
           const targetSpeedY = forceDirectionY * force * maxForce;
-          
+
           // Steer towards target escape velocity
           this.vx += (targetSpeedX - this.vx) * 0.18;
           this.vy += (targetSpeedY - this.vy) * 0.18;
@@ -233,16 +233,16 @@ document.addEventListener('DOMContentLoaded', () => {
           // Sway movement added to base speed
           this.swayAngle += this.swaySpeed;
           const baseSway = Math.sin(this.swayAngle) * this.swayRange;
-          
+
           // Smooth return to default float speed + sway
           this.vx += (this.speedX + baseSway - this.vx) * 0.06;
           this.vy += (this.speedY - this.vy) * 0.06;
         }
-        
+
         // Apply velocity
         this.x += this.vx;
         this.y += this.vy;
-        
+
         // Shimmering opacity
         this.flickerAngle += this.flickerSpeed;
         this.opacity = this.baseOpacity * (0.8 + Math.sin(this.flickerAngle) * 0.35);
@@ -255,37 +255,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
       draw() {
         ctx.fillStyle = this.colorPrefix + this.opacity + ')';
-        
+
         if (this.type === 'heart') {
           // Draw symmetric heart path using bezier curves
           ctx.beginPath();
           ctx.moveTo(this.x, this.y + this.size);
           // Left curve
           ctx.bezierCurveTo(
-            this.x - this.size, this.y + this.size * 0.2, 
-            this.x - this.size * 0.7, this.y - this.size * 0.6, 
+            this.x - this.size, this.y + this.size * 0.2,
+            this.x - this.size * 0.7, this.y - this.size * 0.6,
             this.x, this.y - this.size * 0.15
           );
           // Right curve
           ctx.bezierCurveTo(
-            this.x + this.size * 0.7, this.y - this.size * 0.6, 
-            this.x + this.size, this.y + this.size * 0.2, 
+            this.x + this.size * 0.7, this.y - this.size * 0.6,
+            this.x + this.size, this.y + this.size * 0.2,
             this.x, this.y + this.size
           );
           ctx.closePath();
           ctx.fill();
-          
+
           // Outer glowing halo
           ctx.beginPath();
           ctx.moveTo(this.x, this.y + this.size * 1.3);
           ctx.bezierCurveTo(
-            this.x - this.size * 1.3, this.y + this.size * 0.26, 
-            this.x - this.size * 0.91, this.y - this.size * 0.78, 
+            this.x - this.size * 1.3, this.y + this.size * 0.26,
+            this.x - this.size * 0.91, this.y - this.size * 0.78,
             this.x, this.y - this.size * 0.195
           );
           ctx.bezierCurveTo(
-            this.x + this.size * 0.91, this.y - this.size * 0.78, 
-            this.x + this.size * 1.3, this.y + this.size * 0.26, 
+            this.x + this.size * 0.91, this.y - this.size * 0.78,
+            this.x + this.size * 1.3, this.y + this.size * 0.26,
             this.x, this.y + this.size * 1.3
           );
           ctx.closePath();
@@ -927,20 +927,20 @@ document.addEventListener('DOMContentLoaded', () => {
     function autoRotateHeart() {
       // Base slow rotation
       currentRotation += 0.35;
-      
+
       // Interpolate current rotation with target scroll rotation
       const finalY = currentRotation + targetRotation;
       heartContainer.style.transform = `rotateY(${finalY}deg) rotateX(12deg)`;
-      
+
       requestAnimationFrame(autoRotateHeart);
     }
-    
+
     window.addEventListener('scroll', () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       // 1 degree rotation for every 1.5 pixels scrolled
       targetRotation = scrollTop * 0.65;
     });
-    
+
     autoRotateHeart();
   }
 

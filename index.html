@@ -23,6 +23,7 @@
 </head>
 
 <body class="no-scroll">
+  <canvas id="particles-canvas"></canvas>
 
   <!-- Cover Envelope / Splash Overlay -->
   <div id="invitation-cover" class="cover-overlay">
@@ -104,7 +105,7 @@
       <!-- Welcome Letter & Countdown Section -->
       <div class="section-container">
         <div class="watercolor-splash splash-green" style="top: -50px; left: -50px;"></div>
-        <div class="welcome-card glass-card">
+        <div class="welcome-card glass-card luxury-border-frame">
           <h2>Welcome to our Wedding Site</h2>
           <div class="gold-divider"></div>
           <p class="welcome-text">We are incredibly excited to take the next step in our journey together. Having you
@@ -269,7 +270,7 @@
 
         <!-- Romantic Quote Section -->
         <div class="quote-section" style="margin-top: 5rem;">
-          <div class="quote-container glass-card">
+          <div class="quote-container glass-card luxury-border-frame">
             <i class="fa-solid fa-quote-left quote-icon-left"></i>
             <p class="quote-text">"In all the world, there is no heart for me like yours. In all the world, there is no
               love for you like mine."</p>
@@ -500,7 +501,7 @@
           <p class="section-tagline">Please respond by July 15, 2026</p>
         </div>
 
-        <div class="rsvp-wrapper glass-card">
+        <div class="rsvp-wrapper glass-card luxury-border-frame">
           <form id="rsvp-form" class="rsvp-form">
             <div class="form-row">
               <div class="form-group">
@@ -632,7 +633,7 @@
         </div>
 
         <!-- Add Guestbook wish form -->
-        <div class="guestbook-form-card glass-card">
+        <div class="guestbook-form-card glass-card luxury-border-frame">
           <form id="guestbook-form" class="rsvp-form">
             <div class="form-row">
               <div class="form-group">
@@ -689,6 +690,50 @@
       </div>
     </div>
   </footer>
+
+  <!-- Floating 3D Gold Heart -->
+  <div id="floating-heart" class="floating-3d-heart-wrapper hidden">
+    <div class="heart-3d-container">
+      <div class="heart-3d-layer" style="transform: rotateY(0deg);">
+        <svg viewBox="0 0 24 24" class="gold-heart-svg">
+          <defs>
+            <linearGradient id="goldHeartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ffffff" />
+              <stop offset="30%" stop-color="#ebd594" />
+              <stop offset="70%" stop-color="#cba331" />
+              <stop offset="100%" stop-color="#aa7c11" />
+            </linearGradient>
+          </defs>
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="url(#goldHeartGrad)" />
+        </svg>
+      </div>
+      <div class="heart-3d-layer" style="transform: rotateY(30deg);">
+        <svg viewBox="0 0 24 24" class="gold-heart-svg">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="url(#goldHeartGrad)" />
+        </svg>
+      </div>
+      <div class="heart-3d-layer" style="transform: rotateY(60deg);">
+        <svg viewBox="0 0 24 24" class="gold-heart-svg">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="url(#goldHeartGrad)" />
+        </svg>
+      </div>
+      <div class="heart-3d-layer" style="transform: rotateY(90deg);">
+        <svg viewBox="0 0 24 24" class="gold-heart-svg">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="url(#goldHeartGrad)" />
+        </svg>
+      </div>
+      <div class="heart-3d-layer" style="transform: rotateY(120deg);">
+        <svg viewBox="0 0 24 24" class="gold-heart-svg">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="url(#goldHeartGrad)" />
+        </svg>
+      </div>
+      <div class="heart-3d-layer" style="transform: rotateY(150deg);">
+        <svg viewBox="0 0 24 24" class="gold-heart-svg">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="url(#goldHeartGrad)" />
+        </svg>
+      </div>
+    </div>
+  </div>
 
   <!-- Scripts -->
   <script src="main.js"></script>
