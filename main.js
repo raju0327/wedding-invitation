@@ -193,13 +193,19 @@ document.addEventListener('DOMContentLoaded', () => {
     handleRoute();
   }
 
+  // Helper to convert Chennai, India (IST, UTC+5:30) date to global UTC timestamp
+  function getISTTimestamp(year, monthIndex, day, hour, minute) {
+    const utcTime = Date.UTC(year, monthIndex, day, hour, minute, 0);
+    const istOffset = 5.5 * 60 * 60 * 1000; // 5.5 hours in ms
+    return utcTime - istOffset;
+  }
+
   // 2. Countdown Timer Logic
   const timerDisplay = document.getElementById('countdown-timer-display');
   const messageDisplay = document.getElementById('countdown-message');
 
-  // Cross-browser numeric date constructors: new Date(year, monthIndex, day, hour, minute, second)
   // August is month index 7 (0-indexed)
-  let countdownDate = new Date(2026, 7, 23, 18, 30, 0).getTime();
+  let countdownDate = getISTTimestamp(2026, 7, 23, 18, 30);
 
   function updateCountdown() {
     if (!timerDisplay || !messageDisplay) return;
@@ -249,11 +255,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const countdownType = activeTab.getAttribute('data-countdown-type');
 
       if (countdownType === 'engagement') {
-        countdownDate = new Date(2026, 7, 23, 18, 30, 0).getTime();
+        countdownDate = getISTTimestamp(2026, 7, 23, 18, 30);
         heroDate.textContent = 'August 23, 2026';
         heroVenue.textContent = 'Sri Om Chairma Thirumana Mandabam • Chennai, India';
       } else if (countdownType === 'wedding') {
-        countdownDate = new Date(2026, 9, 25, 7, 30, 0).getTime();
+        countdownDate = getISTTimestamp(2026, 9, 25, 7, 30);
         heroDate.textContent = 'October 25, 2026';
         heroVenue.textContent = 'Pothi Mahal • Gummidipoondi, Tamilnadu';
       }
