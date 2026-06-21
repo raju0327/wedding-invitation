@@ -474,13 +474,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Default wishes to pre-populate wall
-  const defaultWishes = [
-    { name: "Vijay & Radhika (Uncle & Aunt)", wishes: "May your marriage be blessed with deep understanding, endless joy, and love. So thrilled for you both!", timestamp: "2026-06-20T10:15:00.000Z" },
-    { name: "Rahul (Best Friend)", wishes: "Congratulations Vedha Kishore & SeethaLakshmi! Looking forward to the epic reception on August 24th! Let's party!", timestamp: "2026-06-21T02:30:00.000Z" },
-    { name: "Meera Raj (Sister)", wishes: "Welcome to the family Seetha! Wishing you both a beautiful lifetime journey filled with love and laughter.", timestamp: "2026-06-21T06:45:00.000Z" }
-  ];
-
   // Render wishes on the guestbook wall
   function renderGuestbook() {
     // Read local custom messages first as a fallback/immediate load
@@ -488,10 +481,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Clear wall and show loaded items
     function displayWishes(customWishes) {
-      const allWishes = [...defaultWishes, ...customWishes];
       guestbookWall.innerHTML = '';
 
-      allWishes.forEach((w, idx) => {
+      customWishes.forEach((w, idx) => {
         const note = document.createElement('div');
         const colorTheme = idx % 2 === 0 ? 'note-emerald' : 'note-gold';
         note.className = `guestbook-note glass-card ${colorTheme}`;
