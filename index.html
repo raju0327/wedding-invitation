@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="You are cordially invited to the wedding of Kishore Raj and Seethalakshmi. Save the date, view event details, explore our gallery, and RSVP online.">
+  <title>The Wedding of Vedha Kishore Raj & SeethaLakshmi</title>
+
+  <!-- Premium Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+
+  <!-- FontAwesome for Premium Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="no-scroll">
+
+  <!-- Cover Envelope / Splash Overlay -->
+  <div id="invitation-cover" class="cover-overlay">
+    <div class="cover-left"></div>
+    <div class="cover-right"></div>
+
+    <div class="envelope-seal-container">
+      <div class="envelope-card glass-card">
+        <p class="envelope-subtitle">Wedding Invitation</p>
+        <h2 class="envelope-names">Vedha Kishore Raj & SeethaLakshmi</h2>
+        <div class="gold-divider-small"></div>
+        <p class="envelope-prompt">You are cordially invited</p>
+        <button id="open-invitation-btn" class="wax-seal" aria-label="Open Invitation">
+          <span class="seal-initials">V&S</span>
+          <span class="seal-pulse"></span>
+        </button>
+        <p class="envelope-action">Click to Open</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Audio Player -->
+  <button id="music-toggle" class="music-btn" aria-label="Toggle Music">
+    <div class="music-icon-wrapper">
+      <i class="fa-solid fa-music"></i>
+    </div>
+    <div class="music-waves">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </button>
+
+  <!-- Premium Navigation Header -->
+  <nav class="navbar glass-card hidden">
+    <div class="nav-logo">V & S</div>
+    <ul class="nav-links">
+      <li><a href="#home" class="nav-link active"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a href="#story" class="nav-link"><i class="fa-solid fa-heart"></i> <span class="nav-text-long">Our
+          </span>Story</a></li>
+      <li><a href="#events" class="nav-link"><i class="fa-solid fa-calendar-days"></i> Events</a></li>
+      <li><a href="#gallery" class="nav-link"><i class="fa-solid fa-images"></i> Gallery</a></li>
+      <li><a href="#rsvp" class="nav-link"><i class="fa-solid fa-envelope-open-text"></i> RSVP</a></li>
+      <li><a href="#guestbook" class="nav-link"><i class="fa-solid fa-book-open"></i> <span
+            class="nav-text-long">Guestbook</span><span class="nav-text-short">Wishes</span></a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content Wrappers (Single Page Multi-View System) -->
+  <main class="main-wrapper">
+
+    <!-- PAGE 1: HOME -->
+    <section id="home" class="page-view active">
+      <header class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-container fade-in">
+          <div class="gold-frame">
+            <span class="gold-corner top-left"></span>
+            <span class="gold-corner top-right"></span>
+            <span class="gold-corner bottom-left"></span>
+            <span class="gold-corner bottom-right"></span>
+
+            <p class="hero-subtitle">Save The Date</p>
+            <h1 class="hero-couple-names">Vedha Kishore Raj <span class="ampersand">&</span> SeethaLakshmi</h1>
+
+            <!-- Hero Event Tabs -->
+            <div class="hero-tabs">
+              <button class="hero-tab active" data-countdown-type="engagement">Engagement</button>
+              <button class="hero-tab" data-countdown-type="wedding">Wedding</button>
+            </div>
+
+            <p id="hero-date" class="hero-details">August 23, 2026</p>
+            <p id="hero-venue" class="hero-venue">Sri Om Chairma Thirumana Mandabam • Chennai, Tamilnadu</p>
+          </div>
+        </div>
+      </header>
+
+      <!-- Welcome Letter & Countdown Section -->
+      <div class="section-container">
+        <div class="watercolor-splash splash-green" style="top: -50px; left: -50px;"></div>
+        <div class="welcome-card glass-card">
+          <h2>Welcome to our Wedding Site</h2>
+          <div class="gold-divider"></div>
+          <p class="welcome-text">We are incredibly excited to take the next step in our journey together. Having you
+            join us to celebrate our love and union means the world to us. Please use this website to explore our story,
+            find schedules, view our gallery, and send your RSVP response.</p>
+        </div>
+
+        <div class="countdown-wrapper">
+          <h3 class="countdown-title">The Countdown</h3>
+          <div class="gold-divider-small"></div>
+
+          <!-- Countdown Message (Shown when target date has passed) -->
+          <div id="countdown-message" class="glass-card hidden"
+            style="padding: 2rem; width: 100%; max-width: 600px; margin: 0 auto 2rem auto;">
+            <h3
+              style="font-family: var(--font-serif); color: var(--primary); z-index:1; position:relative; margin-bottom: 0;">
+              Today is the Day!</h3>
+          </div>
+
+          <!-- Countdown Timer Display -->
+          <div id="countdown-timer-display" class="countdown-display">
+            <div class="countdown-item">
+              <div class="countdown-circle">
+                <span id="days">00</span>
+              </div>
+              <p class="countdown-label">Days</p>
+            </div>
+            <div class="countdown-item">
+              <div class="countdown-circle">
+                <span id="hours">00</span>
+              </div>
+              <p class="countdown-label">Hours</p>
+            </div>
+            <div class="countdown-item">
+              <div class="countdown-circle">
+                <span id="minutes">00</span>
+              </div>
+              <p class="countdown-label">Minutes</p>
+            </div>
+            <div class="countdown-item">
+              <div class="countdown-circle">
+                <span id="seconds">00</span>
+              </div>
+              <p class="countdown-label">Seconds</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 2: OUR STORY -->
+    <section id="story" class="page-view">
+      <div class="section-container">
+        <div class="watercolor-splash splash-gold" style="bottom: 10%; right: -50px; width: 400px; height: 400px;">
+        </div>
+        <div class="section-title-wrapper">
+          <h2 class="section-title">Our Love Story</h2>
+          <div class="gold-divider"></div>
+          <p class="section-tagline">How two paths crossed and became one beautiful journey</p>
+        </div>
+
+        <!-- Story Timeline -->
+        <div class="timeline">
+          <div class="timeline-line"></div>
+
+          <div class="timeline-item left-item reveal">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content glass-card">
+              <div class="timeline-image-wrapper">
+                <img src="assets/story_met.png" alt="How we met" class="timeline-img">
+              </div>
+              <span class="timeline-date">April 12, 2021</span>
+              <h3>Where It All Began</h3>
+              <p>It started with a spilled coffee, a shared laugh, and a conversation that lasted until the cafe closed.
+                From that very first day, we knew we had found something truly magical.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item right-item reveal">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content glass-card">
+              <div class="timeline-image-wrapper">
+                <img src="assets/story_proposal.png" alt="The proposal" class="timeline-img">
+              </div>
+              <span class="timeline-date">September 18, 2024</span>
+              <h3>The Proposal</h3>
+              <p>Under a canopy of fairy lights and a blanket of stars at our favorite vineyard, Kishore asked the
+                question that changed our lives forever. Through tears of joy, Seethalakshmi said "Yes!"</p>
+            </div>
+          </div>
+
+          <div class="timeline-item left-item reveal">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content glass-card">
+              <div class="timeline-image-wrapper">
+                <img src="assets/story_journey.png" alt="The journey" class="timeline-img">
+              </div>
+              <span class="timeline-date">October 25, 2026</span>
+              <h3>The Next Chapter</h3>
+              <p>Now, we stand at the beginning of our greatest adventure yet. We cannot wait to take this step and
+                celebrate our union surrounded by the people we love most.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Couples Interview Q&A Section -->
+        <div class="interview-section">
+          <div class="section-title-wrapper">
+            <h2 class="section-title">He Said, She Said</h2>
+            <div class="gold-divider"></div>
+            <p class="section-tagline">We answered some fun questions about each other</p>
+          </div>
+
+          <div class="interview-grid">
+            <!-- Kishore Answers -->
+            <div class="interview-card kishore-card glass-card">
+              <div class="interview-header-avatar">
+                <i class="fa-solid fa-circle-user avatar-icon icon-emerald"></i>
+                <h3>Kishore's Answers</h3>
+              </div>
+              <div class="qa-item">
+                <p class="qa-question">What was your first impression of Seetha?</p>
+                <p class="qa-answer">"I thought she was absolutely stunning and carried this warm, gentle energy that
+                  made me feel instantly comfortable. I couldn't stop smiling."</p>
+              </div>
+              <div class="qa-item">
+                <p class="qa-question">Who said 'I love you' first?</p>
+                <p class="qa-answer">"I definitely did! We were walking along the beach in the evening, and I just
+                  couldn't keep it inside anymore. It felt completely natural."</p>
+              </div>
+              <div class="qa-item">
+                <p class="qa-question">What is your favorite memory together?</p>
+                <p class="qa-answer">"Our trip to Ooty. Getting caught in a sudden rain shower and drinking hot tea at a
+                  small roadside shop while looking at the foggy hills."</p>
+              </div>
+            </div>
+
+            <!-- Seetha Answers -->
+            <div class="interview-card seetha-card glass-card">
+              <div class="interview-header-avatar">
+                <i class="fa-solid fa-circle-user avatar-icon icon-gold"></i>
+                <h3>Seetha's Answers</h3>
+              </div>
+              <div class="qa-item">
+                <p class="qa-question">What was your first impression of Kishore?</p>
+                <p class="qa-answer">"He was incredibly polite, attentive, and had this wonderful, goofy laugh. I was
+                  instantly drawn to how genuine and kind he was."</p>
+              </div>
+              <div class="qa-item">
+                <p class="qa-question">Who said 'I love you' first?</p>
+                <p class="qa-answer">"He did, but I responded immediately because I had been feeling the exact same way
+                  for weeks. I was just waiting for him to say it!"</p>
+              </div>
+              <div class="qa-item">
+                <p class="qa-question">What is your favorite memory together?</p>
+                <p class="qa-answer">"The proposal evening. The amount of detail and care he put into setting up the
+                  fairy lights and vineyard walk was so romantic, I was completely blown away."</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Romantic Quote Section -->
+        <div class="quote-section" style="margin-top: 5rem;">
+          <div class="quote-container glass-card">
+            <i class="fa-solid fa-quote-left quote-icon-left"></i>
+            <p class="quote-text">"In all the world, there is no heart for me like yours. In all the world, there is no
+              love for you like mine."</p>
+            <p class="quote-author">— Maya Angelou</p>
+            <i class="fa-solid fa-quote-right quote-icon-right"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 3: EVENTS & TRAVEL -->
+    <section id="events" class="page-view">
+      <div class="section-container">
+        <div class="watercolor-splash splash-gold" style="top: -50px; right: -100px;"></div>
+        <div class="section-title-wrapper">
+          <h2 class="section-title">The Wedding Events</h2>
+          <div class="gold-divider"></div>
+          <p class="section-tagline">Join us for the celebrations of our special day</p>
+        </div>
+
+        <!-- Event Category Tabs -->
+        <div class="event-tabs">
+          <button class="event-tab active" data-event-filter="engagement"><i class="fa-solid fa-ring"></i> Engagement
+            Details</button>
+          <button class="event-tab" data-event-filter="wedding"><i class="fa-solid fa-church"></i> Wedding
+            Details</button>
+        </div>
+
+        <!-- Events Grid -->
+        <div class="events-grid">
+          <!-- Engagement Card -->
+          <div class="event-card glass-card" data-event-category="engagement">
+            <div class="event-header">
+              <i class="fa-solid fa-ring event-icon"></i>
+              <h3>Engagement & Welcome</h3>
+            </div>
+            <div class="event-body">
+              <p class="event-time"><i class="fa-regular fa-clock"></i> Aug 23 • 6:30 PM - 9:30 PM</p>
+              <p class="event-location"><i class="fa-solid fa-map-location-dot"></i> Sri Om Chairma Thirumana Mandabam,
+                Chennai</p>
+              <p class="event-desc">Join us for the exchange of engagement rings, welcome cocktails, and an intimate
+                family dinner under the vine trellis the evening before the festivities.</p>
+              <a href="https://www.google.com/maps/place/Sri+Om+Chairma+Thirumana+Mandabam/@13.0324839,80.1982875,17z/data=!3m1!4b1!4m6!3m5!1s0x3a526727bd353231:0x8fab5f9656a5d3d2!8m2!3d13.0324787!4d80.2008624!16s%2Fg%2F1ptwl33w2?entry=ttu&g_ep=EgoyMDI2MDYxNi4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank" rel="noopener noreferrer" class="btn-secondary">View Location Map</a>
+            </div>
+          </div>
+
+          <!-- Reception Card -->
+          <div class="event-card glass-card hidden" data-event-category="wedding">
+            <div class="event-header">
+              <i class="fa-solid fa-glass-cheers event-icon"></i>
+              <h3>The Reception</h3>
+            </div>
+            <div class="event-body">
+              <p class="event-time"><i class="fa-regular fa-clock"></i> Oct 24 • 7:30 PM - 9:30 PM</p>
+              <p class="event-location"><i class="fa-solid fa-map-location-dot"></i> Pothi Mahal, Gummidipoondi</p>
+              <p class="event-desc">Join us immediately following the pre-wedding celebrations for a grand reception
+                dinner, live music, and congratulations under the chandeliers.</p>
+              <a href="https://www.google.com/maps/place/Pothi+Mahal/data=!4m2!3m1!1s0x0:0x8243a4e3db966cd7?sa=X&ved=1t:2428&ictx=111"
+                target="_blank" rel="noopener noreferrer" class="btn-secondary">View Location Map</a>
+            </div>
+          </div>
+
+          <!-- Mugurtham Card -->
+          <div class="event-card glass-card hidden" data-event-category="wedding">
+            <div class="event-header">
+              <i class="fa-solid fa-gopuram event-icon"></i>
+              <h3>Mugurtham</h3>
+            </div>
+            <div class="event-body">
+              <p class="event-time"><i class="fa-regular fa-clock"></i> Oct 25 • 7:30 AM - 8:30 AM</p>
+              <p class="event-location"><i class="fa-solid fa-map-location-dot"></i> Pothi Mahal, Gummidipoondi</p>
+              <p class="event-desc">Our wedding vows and sacred marriage rites (Mugurtham) will be exchanged during the
+                auspicious morning hours in the main hall.</p>
+              <a href="https://www.google.com/maps/place/Pothi+Mahal/data=!4m2!3m1!1s0x0:0x8243a4e3db966cd7?sa=X&ved=1t:2428&ictx=111"
+                target="_blank" rel="noopener noreferrer" class="btn-secondary">View Location Map</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Travel & Accommodations Details -->
+        <div class="travel-section" style="margin-top: 5rem;">
+          <div class="section-title-wrapper">
+            <h2 class="section-title">Accommodations & Travel</h2>
+            <div class="gold-divider"></div>
+            <p class="section-tagline">Information to assist you in planning your stay</p>
+          </div>
+
+          <div class="events-grid">
+            <!-- Hotel Recommendations Card -->
+            <div class="event-card glass-card">
+              <div class="event-header">
+                <i class="fa-solid fa-hotel event-icon"></i>
+                <h3>Where to Stay</h3>
+              </div>
+              <div class="event-body">
+                <p class="event-location"><i class="fa-solid fa-circle-check"></i> M R Residency, Chennai</p>
+                <p class="event-desc" style="font-size:0.85rem; margin-bottom:1.5rem !important;">Premium residency
+                  located extremely close to the wedding hall (around 5-10 minutes drive), offering excellent comforts
+                  for our guests.</p>
+                <a href="https://www.google.com/maps/place/M+R+RESIDENCY/@13.405143,80.1282176,20.25z/data=!4m14!1m7!3m6!1s0x3a4d81ad2b99f6fb:0x8243a4e3db966cd7!2sPothi+Mahal!8m2!3d13.4238978!4d80.1257851!16s%2Fg%2F11l32zvtrp!3m5!1s0x3a4d818c25a77c27:0x3e979763b70d4a13!8m2!3d13.4049024!4d80.1282025!16s%2Fg%2F11t2z3w0c8?entry=ttu&g_ep=EgoyMDI2MDYxNi4wIKXMDSoASAFQAw%3D%3D"
+                  target="_blank" rel="noopener noreferrer" class="btn-secondary" style="margin-bottom: 1rem;">View
+                  Hotel Map</a>
+                <p class="event-desc" style="font-style: italic; font-weight:500; font-size:0.9rem; margin-top: 1rem;">
+                  For reservations and booking assistance, please contact our coordinator: +91 98765 43210</p>
+              </div>
+            </div>
+
+            <!-- Travel Instructions Card -->
+            <div class="event-card glass-card">
+              <div class="event-header">
+                <i class="fa-solid fa-plane-departure event-icon"></i>
+                <h3>Getting There</h3>
+              </div>
+              <div class="event-body">
+                <p class="event-location"><i class="fa-solid fa-plane"></i> By Air</p>
+                <p class="event-desc" style="font-size:0.85rem; margin-bottom:1.5rem !important;">Chennai International
+                  Airport (MAA) is the nearest airport, located approximately 12 km from the venue and hotels.</p>
+
+                <p class="event-location"><i class="fa-solid fa-train"></i> By Train</p>
+                <p class="event-desc" style="font-size:0.85rem; margin-bottom:1.5rem !important;">Chennai Central Rail
+                  Station (MAS) connects to all major cities in India and is around 10 km from the venue.</p>
+
+                <p class="event-location"><i class="fa-solid fa-car"></i> Local Cab Transport</p>
+                <p class="event-desc" style="font-size:0.85rem; margin-bottom:1.5rem !important;">App cabs like Uber and
+                  Ola are widely available at the airport and train stations for direct transport.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dress Code details -->
+        <div class="dress-code-wrapper glass-card">
+          <h3><i class="fa-solid fa-user-tie"></i> Dress Code</h3>
+          <p class="dress-code-title">Black Tie & Elegant Emerald Accents</p>
+          <p>We kindly request our guests to dress in formal black-tie attire. We would love for you to incorporate a
+            touch of emerald green or gold to match the theme of our special day.</p>
+
+          <div class="dress-code-palette-wrapper">
+            <p class="palette-title">Recommended Attire Colors:</p>
+            <div class="dress-code-palette">
+              <div class="palette-swatch-item">
+                <div class="palette-swatch" style="background-color: #123e32;"></div>
+                <span>Emerald</span>
+              </div>
+              <div class="palette-swatch-item">
+                <div class="palette-swatch" style="background-color: #cba331;"></div>
+                <span>Champagne Gold</span>
+              </div>
+              <div class="palette-swatch-item">
+                <div class="palette-swatch" style="background-color: #3b5c51;"></div>
+                <span>Forest Sage</span>
+              </div>
+              <div class="palette-swatch-item">
+                <div class="palette-swatch" style="background-color: #1a2421;"></div>
+                <span>Classic Black</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 4: GALLERY -->
+    <section id="gallery" class="page-view">
+      <div class="section-container">
+        <div class="watercolor-splash splash-green" style="bottom: -50px; left: -100px;"></div>
+        <div class="section-title-wrapper">
+          <h2 class="section-title">Gallery</h2>
+          <div class="gold-divider"></div>
+          <p class="section-tagline">Moments of love, laughter, and happiness captured in time</p>
+        </div>
+
+        <!-- Gallery Filter Tabs -->
+        <div class="gallery-tabs">
+          <button class="gallery-tab active" data-filter="all">All Photos</button>
+          <button class="gallery-tab" data-filter="engagement">Engagement</button>
+          <button class="gallery-tab" data-filter="shoot">Pre-Wedding</button>
+        </div>
+
+        <!-- Photo Grid -->
+        <div class="gallery-grid">
+          <div class="gallery-item" data-category="engagement">
+            <img src="assets/story_met.png" alt="First Met Celebration" class="gallery-img" data-index="0">
+            <div class="gallery-hover">
+              <i class="fa-solid fa-expand"></i>
+            </div>
+          </div>
+          <div class="gallery-item" data-category="engagement">
+            <img src="assets/story_proposal.png" alt="Engagement Proposal Ring" class="gallery-img" data-index="1">
+            <div class="gallery-hover">
+              <i class="fa-solid fa-expand"></i>
+            </div>
+          </div>
+          <div class="gallery-item" data-category="shoot">
+            <img src="assets/story_journey.png" alt="Pre-Wedding Shoot Sunset" class="gallery-img" data-index="2">
+            <div class="gallery-hover">
+              <i class="fa-solid fa-expand"></i>
+            </div>
+          </div>
+          <div class="gallery-item" data-category="shoot">
+            <img src="assets/wedding_hero_bg.png" alt="Pre-Wedding Art Portrait" class="gallery-img" data-index="3">
+            <div class="gallery-hover">
+              <i class="fa-solid fa-expand"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lightbox Modal -->
+        <div id="lightbox" class="lightbox-modal">
+          <span class="lightbox-close">&times;</span>
+          <button class="lightbox-prev" aria-label="Previous image">&#10094;</button>
+          <img class="lightbox-content" id="lightbox-img" alt="Enlarged view">
+          <button class="lightbox-next" aria-label="Next image">&#10095;</button>
+          <div id="lightbox-caption"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 5: RSVP -->
+    <section id="rsvp" class="page-view">
+      <div class="section-container">
+        <div class="watercolor-splash splash-gold"
+          style="top: -80px; left: 50%; transform: translateX(-50%); width: 450px; height: 450px; opacity: 0.08;"></div>
+        <div class="section-title-wrapper">
+          <h2 class="section-title">RSVP</h2>
+          <div class="gold-divider"></div>
+          <p class="section-tagline">Please respond by July 15, 2026</p>
+        </div>
+
+        <div class="rsvp-wrapper glass-card">
+          <form id="rsvp-form" class="rsvp-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="guest-name">Guest Name</label>
+                <div class="input-with-icon">
+                  <i class="fa-solid fa-user form-icon"></i>
+                  <input type="text" id="guest-name" name="name" placeholder="Enter your full name" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="guest-mobile">Mobile Number</label>
+                <div class="input-with-icon">
+                  <i class="fa-solid fa-phone form-icon"></i>
+                  <input type="tel" id="guest-mobile" name="mobile" placeholder="For event coordination and updates"
+                    required>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Will you join us in celebrating our special day?</label>
+                <div class="attendance-cards-group">
+                  <label class="attendance-card-label">
+                    <input type="radio" name="attendance" value="accept" required checked>
+                    <div class="attendance-card accept-card">
+                      <div class="attendance-card-icon">
+                        <i class="fa-solid fa-heart-circle-check"></i>
+                      </div>
+                      <div class="attendance-card-content">
+                        <span class="attendance-card-title">Joyfully Accepts</span>
+                        <span class="attendance-card-desc">Can't wait to celebrate!</span>
+                      </div>
+                    </div>
+                  </label>
+                  <label class="attendance-card-label">
+                    <input type="radio" name="attendance" value="decline" required>
+                    <div class="attendance-card decline-card">
+                      <div class="attendance-card-icon">
+                        <i class="fa-solid fa-heart-circle-xmark"></i>
+                      </div>
+                      <div class="attendance-card-content">
+                        <span class="attendance-card-title">Regretfully Declines</span>
+                        <span class="attendance-card-desc">Will celebrate from afar.</span>
+                      </div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div id="rsvp-details">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="guest-count">Number of Attendees</label>
+                  <div class="input-with-icon">
+                    <i class="fa-solid fa-users form-icon"></i>
+                    <select id="guest-count" name="guests" required>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5+">5+</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="guest-relation">Your Relationship With the Couple (Optional)</label>
+                  <div class="input-with-icon">
+                    <i class="fa-solid fa-heart-pulse form-icon"></i>
+                    <select id="guest-relation" name="relation">
+                      <option value="" disabled selected>Select your relationship</option>
+                      <option value="Family">Family</option>
+                      <option value="Friend">Friend</option>
+                      <option value="Colleague">Colleague</option>
+                      <option value="Relative">Relative</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="wishes">Blessings & Wishes for the Couple (Optional)</label>
+                <div class="input-with-icon text-area-icon-wrapper">
+                  <i class="fa-solid fa-pen-fancy form-icon"></i>
+                  <textarea id="wishes" name="wishes"
+                    placeholder="Share your heartfelt wishes and blessings for Vedha Kishore Raj & SeethaLakshmi..."
+                    rows="4"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" id="rsvp-submit-btn" class="btn-primary">
+              <span class="btn-text">Send RSVP</span>
+              <span class="btn-loader hidden"></span>
+            </button>
+          </form>
+
+          <!-- RSVP Success Message -->
+          <div id="rsvp-success" class="rsvp-success-message hidden">
+            <div class="success-icon-wrapper">
+              <i class="fa-solid fa-circle-check scale-up"></i>
+            </div>
+            <h3>Thank You!</h3>
+            <p id="success-feedback-text">Your response has been joyfully recorded.</p>
+            <button id="rsvp-edit-btn" class="btn-secondary">Edit Response</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 6: GUESTBOOK -->
+    <section id="guestbook" class="page-view">
+      <div class="section-container">
+        <div class="watercolor-splash splash-green" style="top: -100px; left: -100px;"></div>
+        <div class="section-title-wrapper">
+          <h2 class="section-title">Congratulatory Guestbook</h2>
+          <div class="gold-divider"></div>
+          <p class="section-tagline">Leave a message of love and blessings for the couple</p>
+        </div>
+
+        <!-- Add Guestbook wish form -->
+        <div class="guestbook-form-card glass-card">
+          <form id="guestbook-form" class="rsvp-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="gb-name">Your Name</label>
+                <div class="input-with-icon">
+                  <i class="fa-solid fa-user form-icon"></i>
+                  <input type="text" id="gb-name" placeholder="Enter your name" required>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="gb-message">Your Blessings / Message</label>
+                <div class="input-with-icon text-area-icon-wrapper">
+                  <i class="fa-solid fa-envelope-open-text form-icon"></i>
+                  <textarea id="gb-message" placeholder="Type your congratulations here..." rows="4"
+                    required></textarea>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn-primary">Post Blessing</button>
+          </form>
+        </div>
+
+        <!-- Message Wall showing wishes -->
+        <div class="guestbook-wall-wrapper">
+          <h3 class="wall-title">Wishes & Blessings Wall</h3>
+          <div class="gold-divider-small"></div>
+          <div id="guestbook-wall" class="guestbook-wall">
+            <!-- Dynamic sticky notes injected here -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="footer-logo-monogram">V & S</div>
+        <p class="footer-tagline">Two hearts united in love and faith. We look forward to celebrating our wedding
+          journey with you.</p>
+        <div class="footer-hashtags">
+          <span>#VedhaWedsSeetha</span>
+          <span>#VSLoveStory</span>
+        </div>
+      </div>
+      <div class="footer-right">
+        <p class="footer-signoff">With Love,</p>
+        <h2 class="footer-couple">Vedha Kishore & SeethaLakshmi</h2>
+        <p class="footer-copyright">&copy; 2026 Vedha Kishore & SeethaLakshmi. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="main.js"></script>
+</body>
+
+</html>
