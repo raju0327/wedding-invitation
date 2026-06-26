@@ -348,11 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
     navbar.classList.remove('hidden');
     navbar.classList.add('visible');
 
-    // Reveal floating 3D heart
-    const floatingHeart = document.getElementById('floating-heart');
-    if (floatingHeart) {
-      floatingHeart.classList.remove('hidden');
-    }
+
 
     // Play the ambient synthesizer background music automatically on user interaction
     ambientSynth.start();
@@ -482,12 +478,21 @@ document.addEventListener('DOMContentLoaded', () => {
         countdownDate = getISTTimestamp(2026, 9, 25, 7, 30);
         heroDate.textContent = 'October 25, 2026';
         heroVenue.textContent = 'Pothi Mahal • Gummidipoondi, Tamilnadu';
+        
+        if (isWeddingLocked()) {
+          const wrapper = document.getElementById('hero-details-lock-wrapper');
+          if (wrapper) triggerShake(wrapper);
+        } else {
+          triggerConfetti();
+        }
       }
 
       // Reset interval to prevent stutter and trigger immediate update
       clearInterval(countdownInterval);
       updateCountdown();
       countdownInterval = setInterval(updateCountdown, 1000);
+
+      updateLockUI();
     });
   });
 
@@ -543,6 +548,17 @@ document.addEventListener('DOMContentLoaded', () => {
       activeTab.classList.add('active');
       const category = activeTab.getAttribute('data-event-filter');
       filterEvents(category);
+
+      if (category === 'wedding') {
+        if (isWeddingLocked()) {
+          const reception = document.getElementById('reception-card');
+          const mugurtham = document.getElementById('mugurtham-card');
+          if (reception) triggerShake(reception);
+          if (mugurtham) triggerShake(mugurtham);
+        } else {
+          triggerConfetti();
+        }
+      }
     });
   });
 
@@ -664,35 +680,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // --- RSVP & Guestbook Wall Integration ---
-  const rsvpForm = document.getElementById('rsvp-form');
-  const rsvpDetails = document.getElementById('rsvp-details');
-  const attendanceRadios = document.querySelectorAll('input[name="attendance"]');
-  const submitBtn = document.getElementById('rsvp-submit-btn');
-  const btnText = submitBtn.querySelector('.btn-text');
-  const btnLoader = submitBtn.querySelector('.btn-loader');
-  const rsvpSuccessMsg = document.getElementById('rsvp-success');
-  const successFeedbackText = document.getElementById('success-feedback-text');
-  const editBtn = document.getElementById('rsvp-edit-btn');
-
+  // --- Guestbook Wall Integration ---
   const guestbookForm = document.getElementById('guestbook-form');
   const guestbookWall = document.getElementById('guestbook-wall');
-
-  // Toggle RSVP details
-  attendanceRadios.forEach(radio => {
-    radio.addEventListener('change', (e) => {
-      if (e.target.value === 'decline') {
-        rsvpDetails.style.maxHeight = '0px';
-        rsvpDetails.style.opacity = '0';
-        rsvpDetails.style.overflow = 'hidden';
-        rsvpDetails.style.transition = 'all 0.5s ease';
-      } else {
-        rsvpDetails.style.maxHeight = '500px';
-        rsvpDetails.style.opacity = '1';
-        rsvpDetails.style.transition = 'all 0.5s ease';
-      }
-    });
-  });
 
   // Render wishes on the guestbook wall
   function renderGuestbook() {
@@ -749,111 +739,408 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initial load of guestbook
   renderGuestbook();
 
-  // Load RSVP state if exists
-  const savedRSVP = localStorage.getItem('wedding_rsvp');
-  if (savedRSVP) {
-    const data = JSON.parse(savedRSVP);
-    showSuccessState(data);
+  // --- Time-Lock Security System Logic ---
+  const UNLOCK_TIME = getISTTimestamp(2026, 7, 23, 20, 0); // August 23, 2026, 8:00 PM IST
+
+  function isWeddingLocked() {
+    const override = localStorage.getItem('wedding_details_locked');
+    if (override === 'false') return false;
+    if (override === 'true') return true;
+    if (window.location.search.includes('bypass-lock')) return false;
+    return Date.now() < UNLOCK_TIME;
   }
 
-  function showSuccessState(data) {
-    rsvpForm.classList.add('hidden');
-    rsvpSuccessMsg.classList.remove('hidden');
+  function isFooterLocked() {
+    const override = localStorage.getItem('footer_memories_locked');
+    if (override === 'false') return false;
+    if (override === 'true') return true;
+    return Date.now() < UNLOCK_TIME;
+  }
 
-    if (data.attendance === 'accept') {
-      successFeedbackText.textContent = `We are thrilled that you are joining us! We have registered ${data.guests} attendee(s) under your name. See you at the celebrations!`;
-    } else {
-      successFeedbackText.textContent = "We are sorry you won't be able to make it, but we appreciate you letting us know. Warm wishes!";
+  function triggerShake(element) {
+    if (!element) return;
+    element.classList.remove('shake-element');
+    void element.offsetWidth; // Force reflow
+    element.classList.add('shake-element');
+    setTimeout(() => {
+      element.classList.remove('shake-element');
+    }, 600);
+  }
+
+  function updateLockUI() {
+    const weddingLocked = isWeddingLocked();
+    const footerLocked = isFooterLocked();
+    
+    const heroDetailsContent = document.getElementById('hero-details-content');
+    const heroLockOverlay = document.getElementById('hero-lock-overlay');
+    const receptionCard = document.getElementById('reception-card');
+    const mugurthamCard = document.getElementById('mugurtham-card');
+    
+    const countdownLockContent = document.getElementById('countdown-lock-content');
+    const countdownLockOverlay = document.getElementById('countdown-lock-overlay');
+    const galleryLockCard = document.getElementById('gallery-lock-card');
+
+    // Update footer toggle control states (Locked / Unlocked)
+    const footerLockControl = document.getElementById('footer-lock-control');
+    const footerLockToggle = document.getElementById('footer-lock-toggle');
+    const footerLockStatusText = document.getElementById('footer-lock-status-text');
+
+    const bothUnlocked = !weddingLocked && !footerLocked;
+
+    if (footerLockToggle) {
+      footerLockToggle.checked = bothUnlocked;
     }
-  }
+    if (footerLockControl) {
+      if (bothUnlocked) {
+        footerLockControl.classList.remove('locked');
+        footerLockControl.classList.add('unlocked');
+        if (footerLockStatusText) footerLockStatusText.textContent = "UNLOCKED";
+      } else {
+        footerLockControl.classList.remove('unlocked');
+        footerLockControl.classList.add('locked');
+        if (footerLockStatusText) footerLockStatusText.textContent = "LOCKED";
+      }
+    }
 
-  // Handle RSVP Submit
-  rsvpForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+    // Update Hero date/venue display
+    const activeHeroTab = document.querySelector('.hero-tab.active');
+    const isWeddingTab = activeHeroTab && activeHeroTab.getAttribute('data-countdown-type') === 'wedding';
+    const heroDetailsLockWrapper = document.getElementById('hero-details-lock-wrapper');
 
-    btnText.textContent = 'Submitting...';
-    btnLoader.classList.remove('hidden');
-    submitBtn.disabled = true;
+    if (isWeddingTab && weddingLocked) {
+      if (heroDetailsLockWrapper) heroDetailsLockWrapper.classList.add('is-locked');
+      if (heroDetailsContent) heroDetailsContent.classList.add('blur-details');
+      if (heroLockOverlay) heroLockOverlay.classList.remove('hidden-fade');
+    } else {
+      if (heroDetailsLockWrapper) heroDetailsLockWrapper.classList.remove('is-locked');
+      if (heroDetailsContent) heroDetailsContent.classList.remove('blur-details');
+      if (heroLockOverlay) heroLockOverlay.classList.add('hidden-fade');
+    }
 
-    const name = document.getElementById('guest-name').value;
-    const mobile = document.getElementById('guest-mobile').value;
-    const attendance = document.querySelector('input[name="attendance"]:checked').value;
-    const guests = document.getElementById('guest-count').value;
-    const relation = document.getElementById('guest-relation').value;
-    const wishes = document.getElementById('wishes').value;
+    // Update Countdown display
+    const countdownLockWrapper = document.getElementById('countdown-lock-wrapper');
+    if (isWeddingTab && weddingLocked) {
+      if (countdownLockWrapper) countdownLockWrapper.classList.add('is-locked');
+      if (countdownLockContent) countdownLockContent.classList.add('blur-details');
+      if (countdownLockOverlay) countdownLockOverlay.classList.remove('hidden-fade');
+    } else {
+      if (countdownLockWrapper) countdownLockWrapper.classList.remove('is-locked');
+      if (countdownLockContent) countdownLockContent.classList.remove('blur-details');
+      if (countdownLockOverlay) countdownLockOverlay.classList.add('hidden-fade');
+    }
 
-    const rsvpData = {
-      type: 'rsvp',
-      name,
-      mobile,
-      attendance,
-      guests: attendance === 'decline' ? '0' : guests,
-      relation,
-      wishes,
-      timestamp: new Date().toISOString()
-    };
-
-    function completeRSVPSubmission() {
-      // Save RSVP details locally
-      localStorage.setItem('wedding_rsvp', JSON.stringify(rsvpData));
-
-      // Save custom wish locally as well (if present)
-      if (wishes.trim().length > 0) {
-        const customMessages = JSON.parse(localStorage.getItem('wedding_wishes')) || [];
-        if (!customMessages.some(m => m.wishes === wishes && m.name === name)) {
-          customMessages.push({ name, wishes, timestamp: rsvpData.timestamp });
-          localStorage.setItem('wedding_wishes', JSON.stringify(customMessages));
+    // Update Event cards
+    [receptionCard, mugurthamCard].forEach(card => {
+      if (card) {
+        const content = card.querySelector('.lockable-content');
+        const overlay = card.querySelector('.lock-overlay');
+        
+        if (weddingLocked) {
+          card.classList.add('is-locked');
+          if (content) content.classList.add('blur-details');
+          if (overlay) overlay.classList.remove('hidden-fade');
+        } else {
+          card.classList.remove('is-locked');
+          if (content) content.classList.remove('blur-details');
+          if (overlay) overlay.classList.add('hidden-fade');
         }
       }
+    });
 
-      btnText.textContent = 'Send RSVP';
-      btnLoader.classList.add('hidden');
-      submitBtn.disabled = false;
-
-      showSuccessState(rsvpData);
+    // Update Gallery lock card
+    if (galleryLockCard) {
+      const content = galleryLockCard.querySelector('.lockable-content');
+      const overlay = galleryLockCard.querySelector('.lock-overlay');
+      
+      if (footerLocked) {
+        galleryLockCard.classList.add('is-locked');
+        if (content) content.classList.add('blur-details');
+        if (overlay) overlay.classList.remove('hidden-fade');
+      } else {
+        galleryLockCard.classList.remove('is-locked');
+        if (content) content.classList.remove('blur-details');
+        if (overlay) overlay.classList.add('hidden-fade');
+      }
     }
 
-    if (GOOGLE_SCRIPT_URL) {
-      // Post to Google Sheets
-      fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(rsvpData)
-      })
-        .then(() => {
-          completeRSVPSubmission();
-        })
-        .catch(err => {
-          console.error('Google Sheets RSVP failed, saving locally:', err);
-          completeRSVPSubmission();
+    // Update toggle switches in password modal
+    const toggleWeddingInput = document.getElementById('toggle-wedding-details');
+    const toggleFooterInput = document.getElementById('toggle-footer-memories');
+    if (toggleWeddingInput) toggleWeddingInput.checked = !weddingLocked;
+    if (toggleFooterInput) toggleFooterInput.checked = !footerLocked;
+  }
+
+  // Set click handlers on overlays to trigger shake
+  const heroLockOverlay = document.getElementById('hero-lock-overlay');
+  if (heroLockOverlay) {
+    heroLockOverlay.addEventListener('click', () => {
+      const wrapper = document.getElementById('hero-details-lock-wrapper');
+      if (wrapper) triggerShake(wrapper);
+    });
+  }
+
+  const countdownLockOverlay = document.getElementById('countdown-lock-overlay');
+  if (countdownLockOverlay) {
+    countdownLockOverlay.addEventListener('click', () => {
+      const wrapper = document.getElementById('countdown-lock-wrapper');
+      if (wrapper) triggerShake(wrapper);
+    });
+  }
+
+  const receptionCard = document.getElementById('reception-card');
+  const mugurthamCard = document.getElementById('mugurtham-card');
+  [receptionCard, mugurthamCard].forEach(card => {
+    if (card) {
+      const overlay = card.querySelector('.lock-overlay');
+      if (overlay) {
+        overlay.addEventListener('click', () => {
+          triggerShake(card);
         });
-    } else {
-      // Simulate delay for feel, then save locally
-      setTimeout(() => {
-        completeRSVPSubmission();
-      }, 1500);
+      }
     }
   });
 
-  // Edit RSVP Handler
-  editBtn.addEventListener('click', () => {
-    const data = JSON.parse(localStorage.getItem('wedding_rsvp'));
-    if (data) {
-      document.getElementById('guest-name').value = data.name;
-      document.getElementById('guest-mobile').value = data.mobile || '';
-      document.querySelector(`input[name="attendance"][value="${data.attendance}"]`).checked = true;
-      document.getElementById('guest-count').value = data.guests || '1';
-      document.getElementById('guest-relation').value = data.relation || '';
-      document.getElementById('wishes').value = data.wishes || '';
+  const galleryLockCard = document.getElementById('gallery-lock-card');
+  if (galleryLockCard) {
+    const overlay = galleryLockCard.querySelector('.lock-overlay');
+    const lockTooltip = document.getElementById('lock-tooltip');
+    let tooltipTimeout = null;
 
-      const activeRadio = document.querySelector('input[name="attendance"]:checked');
-      activeRadio.dispatchEvent(new Event('change'));
+    if (overlay) {
+      overlay.addEventListener('click', () => {
+        if (isFooterLocked()) {
+          triggerShake(galleryLockCard);
+          if (lockTooltip) {
+            lockTooltip.classList.remove('hidden');
+            if (tooltipTimeout) clearTimeout(tooltipTimeout);
+            tooltipTimeout = setTimeout(() => {
+              lockTooltip.classList.add('hidden');
+            }, 2000);
+          }
+        }
+      });
+    }
+  }
+
+  // Address details navigation button click handler
+  const heroAddressBtn = document.getElementById('hero-address-btn');
+  if (heroAddressBtn) {
+    heroAddressBtn.addEventListener('click', () => {
+      const activeHeroTab = document.querySelector('.hero-tab.active');
+      const countdownType = activeHeroTab ? activeHeroTab.getAttribute('data-countdown-type') : 'engagement';
+      
+      // Navigate to Events Page
+      window.location.hash = '#events';
+      
+      // Click corresponding events category tab
+      const filterTab = document.querySelector(`.event-tab[data-event-filter="${countdownType}"]`);
+      if (filterTab) {
+        filterTab.click();
+      }
+    });
+  }
+
+  // Run initial lock state setup
+  updateLockUI();
+
+  // --- Admin Lock Settings Modal Logic ---
+  const footerLockToggle = document.getElementById('footer-lock-toggle');
+  const passwordModal = document.getElementById('password-modal');
+  const passwordInput = document.getElementById('admin-password-input');
+  const passwordCancelBtn = document.getElementById('password-cancel-btn');
+  const passwordSubmitBtn = document.getElementById('password-submit-btn');
+  const passwordErrorMsg = document.getElementById('password-error-msg');
+  
+  const authView = document.getElementById('password-modal-auth-view');
+  const controlsView = document.getElementById('password-modal-controls-view');
+  const adminCloseBtn = document.getElementById('admin-close-btn');
+  const toggleWeddingInput = document.getElementById('toggle-wedding-details');
+  const toggleFooterInput = document.getElementById('toggle-footer-memories');
+
+  if (footerLockToggle && passwordModal) {
+    footerLockToggle.addEventListener('click', (e) => {
+      const weddingLocked = isWeddingLocked();
+      const footerLocked = isFooterLocked();
+      const bothUnlocked = !weddingLocked && !footerLocked;
+
+      if (bothUnlocked) {
+        // Unlocked -> Locked: Lock everything immediately, no passcode needed!
+        localStorage.setItem('wedding_details_locked', 'true');
+        localStorage.setItem('footer_memories_locked', 'true');
+        updateLockUI();
+      } else {
+        // Locked -> Unlocked: Prevent default visual toggle, ask for password
+        e.preventDefault();
+        passwordModal.classList.remove('hidden');
+        if (authView) authView.classList.remove('hidden');
+        if (controlsView) controlsView.classList.add('hidden');
+        passwordInput.value = '';
+        passwordInput.focus();
+        passwordErrorMsg.classList.add('hidden');
+      }
+    });
+
+    passwordCancelBtn.addEventListener('click', () => {
+      passwordModal.classList.add('hidden');
+    });
+
+    passwordModal.addEventListener('click', (e) => {
+      if (e.target === passwordModal) {
+        passwordModal.classList.add('hidden');
+      }
+    });
+
+    function handleAdminPasswordSubmit() {
+      const password = passwordInput.value;
+      if (password === 'VS2026') {
+        if (authView) authView.classList.add('hidden');
+        if (controlsView) controlsView.classList.remove('hidden');
+        
+        // Initial toggles state setup
+        if (toggleWeddingInput) toggleWeddingInput.checked = !isWeddingLocked();
+        if (toggleFooterInput) toggleFooterInput.checked = !isFooterLocked();
+      } else {
+        passwordErrorMsg.classList.remove('hidden');
+        const modalCard = passwordModal.querySelector('.password-modal-card');
+        if (modalCard) triggerShake(modalCard);
+      }
     }
 
-    rsvpSuccessMsg.classList.add('hidden');
-    rsvpForm.classList.remove('hidden');
-  });
+    passwordSubmitBtn.addEventListener('click', handleAdminPasswordSubmit);
+    
+    passwordInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        handleAdminPasswordSubmit();
+      }
+    });
+
+    // Toggle password visibility handler
+    const togglePasswordBtn = document.getElementById('toggle-password-visibility');
+    if (togglePasswordBtn && passwordInput) {
+      togglePasswordBtn.addEventListener('click', () => {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        
+        const icon = togglePasswordBtn.querySelector('i');
+        if (icon) {
+          if (type === 'password') {
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+          } else {
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+          }
+        }
+      });
+    }
+
+    // Toggle switch listeners
+    if (toggleWeddingInput) {
+      toggleWeddingInput.addEventListener('change', (e) => {
+        const unlocked = e.target.checked;
+        localStorage.setItem('wedding_details_locked', unlocked ? 'false' : 'true');
+        updateLockUI();
+        if (unlocked) {
+          triggerConfetti();
+        }
+      });
+    }
+
+    if (toggleFooterInput) {
+      toggleFooterInput.addEventListener('change', (e) => {
+        const unlocked = e.target.checked;
+        localStorage.setItem('footer_memories_locked', unlocked ? 'false' : 'true');
+        updateLockUI();
+        if (unlocked) {
+          triggerConfetti();
+        }
+      });
+    }
+
+    if (adminCloseBtn) {
+      adminCloseBtn.addEventListener('click', () => {
+        passwordModal.classList.add('hidden');
+      });
+    }
+  }
+
+  // --- Paper Confetti Popup Celebration Engine ---
+  function triggerConfetti() {
+    const duration = 2500;
+    const animationEnd = Date.now() + duration;
+    
+    const canvas = document.createElement('canvas');
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100vw';
+    canvas.style.height = '100vh';
+    canvas.style.pointerEvents = 'none';
+    canvas.style.zIndex = '9999';
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const colors = ['#ffe066', '#cba331', '#123e32', '#3b5c51', '#ebd594', '#ff4d4d', '#4d94ff'];
+    let confetti = [];
+
+    class ConfettiPiece {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = canvas.height + 20;
+        this.size = Math.random() * 8 + 5;
+        this.speedX = Math.random() * 10 - 5;
+        this.speedY = -(Math.random() * 15 + 10);
+        this.rotation = Math.random() * 360;
+        this.rotationSpeed = Math.random() * 10 - 5;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.gravity = 0.4;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.speedY += this.gravity;
+        this.y += this.speedY;
+        this.rotation += this.rotationSpeed;
+      }
+
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate((this.rotation * Math.PI) / 180);
+        ctx.fillStyle = this.color;
+        ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size * 1.5);
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < 100; i++) {
+      confetti.push(new ConfettiPiece());
+    }
+
+    function frame() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confetti = confetti.filter(p => p.y < canvas.height + 50 && p.x > -50 && p.x < canvas.width + 50);
+
+      confetti.forEach(p => {
+        p.update();
+        p.draw();
+      });
+
+      if (confetti.length > 0 || Date.now() < animationEnd) {
+        if (Date.now() < animationEnd && confetti.length < 70) {
+          confetti.push(new ConfettiPiece());
+        }
+        requestAnimationFrame(frame);
+      } else {
+        canvas.remove();
+      }
+    }
+
+    frame();
+  }
 
   // Handle Guestbook Form Submit (Posting directly from wall)
   guestbookForm.addEventListener('submit', (e) => {
@@ -918,30 +1205,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // --- Floating 3D Heart Scroll & Auto Rotation ---
-  const heartContainer = document.querySelector('.heart-3d-container');
-  if (heartContainer) {
-    let currentRotation = 0;
-    let targetRotation = 0;
 
-    function autoRotateHeart() {
-      // Base slow rotation
-      currentRotation += 0.35;
-
-      // Interpolate current rotation with target scroll rotation
-      const finalY = currentRotation + targetRotation;
-      heartContainer.style.transform = `rotateY(${finalY}deg) rotateX(12deg)`;
-
-      requestAnimationFrame(autoRotateHeart);
-    }
-
-    window.addEventListener('scroll', () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      // 1 degree rotation for every 1.5 pixels scrolled
-      targetRotation = scrollTop * 0.65;
-    });
-
-    autoRotateHeart();
-  }
 
 });
