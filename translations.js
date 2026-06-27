@@ -297,11 +297,11 @@ window.translatePage = function(lang) {
     if (trans[key]) {
       const hasTextLong = el.querySelector('.nav-text-long');
       const hasTextShort = el.querySelector('.nav-text-short');
-      if (hasTextLong || hasTextShort) {
+            if (hasTextLong || hasTextShort) {
         if (key === 'nav-story') {
-          el.innerHTML = `<i class="fa-solid fa-heart"></i> <span class="nav-text-long">${lang === 'ta' ? 'எங்கள் ' : 'Our '}</span>${lang === 'ta' ? 'கதை' : 'Story'}`;
+          el.innerHTML = `<span class="nav-text-long">${lang === 'ta' ? 'எங்கள் ' : 'Our '}</span>${lang === 'ta' ? 'கதை' : 'Story'}`;
         } else if (key === 'nav-guestbook') {
-          el.innerHTML = `<i class="fa-solid fa-book-open"></i> <span class="nav-text-long">${lang === 'ta' ? 'வாழ்த்துப் புத்தகம்' : 'Guestbook'}</span><span class="nav-text-short">${lang === 'ta' ? 'வாழ்த்துகள்' : 'Wishes'}</span>`;
+          el.innerHTML = `<span class="nav-text-long">${lang === 'ta' ? 'வாழ்த்துப் புத்தகம்' : 'Guestbook'}</span><span class="nav-text-short">${lang === 'ta' ? 'வாழ்த்துகள்' : 'Wishes'}</span>`;
         }
       } else if (trans[key].includes('<span')) {
         el.innerHTML = trans[key];
