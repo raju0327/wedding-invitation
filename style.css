@@ -697,9 +697,14 @@ h1, h2, h3, h4 {
 
 .hero-container {
   z-index: 2;
-  width: 90%;
-  max-width: 800px;
-  padding: 2rem;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  padding: 3rem;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Luxury Gold Border Frame */
@@ -710,6 +715,13 @@ h1, h2, h3, h4 {
   background: rgba(10, 36, 29, 0.35);
   backdrop-filter: blur(5px);
   border-radius: 4px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .gold-corner {
@@ -2902,6 +2914,26 @@ h1, h2, h3, h4 {
   .section-container {
     padding: 4rem 1.5rem;
   }
+
+  .hero-container {
+    padding: 1.25rem !important;
+  }
+
+  .gold-frame {
+    padding: 2.5rem 1rem !important;
+  }
+
+  .interview-card {
+    padding: 2rem 1.25rem !important;
+  }
+
+  .event-card {
+    padding: 2rem 1.25rem !important;
+  }
+
+  .guestbook-form-card {
+    padding: 2rem 1.25rem !important;
+  }
   
   .navbar {
     top: auto;
@@ -2959,15 +2991,15 @@ h1, h2, h3, h4 {
   }
   
   .hero-couple-names {
-    font-size: 3.2rem;
+    font-size: 2.8rem !important;
   }
   
   .hero-couple-names .ampersand {
-    font-size: 2.2rem;
+    font-size: 1.8rem !important;
   }
   
   .hero-details {
-    font-size: 1.3rem;
+    font-size: 1.2rem !important;
   }
   
   .countdown-display {
@@ -3058,11 +3090,29 @@ h1, h2, h3, h4 {
 
 @media screen and (max-width: 480px) {
   .hero-couple-names {
-    font-size: 2.5rem;
+    font-size: 2.0rem !important;
   }
   
   .hero-details {
-    font-size: 1.1rem;
+    font-size: 1.1rem !important;
+  }
+
+  .countdown-display {
+    gap: 0.5rem !important;
+  }
+
+  .countdown-circle {
+    width: 70px !important;
+    height: 70px !important;
+  }
+
+  .countdown-circle span {
+    font-size: 1.3rem !important;
+  }
+
+  .countdown-label {
+    font-size: 0.65rem !important;
+    margin-top: 0.4rem !important;
   }
   
   .attendance-cards-group {
@@ -3085,5 +3135,28 @@ h1, h2, h3, h4 {
     font-size: 0.52rem;
     padding: 0.3rem 0.2rem;
     letter-spacing: 0.2px;
+  }
+
+  .hero-couple-names {
+    font-size: 1.6rem !important;
+  }
+
+  .countdown-display {
+    gap: 0.35rem !important;
+  }
+
+  .countdown-circle {
+    width: 64px !important;
+    height: 64px !important;
+  }
+
+  .countdown-circle span {
+    font-size: 1.1rem !important;
+  }
+
+  .countdown-label {
+    font-size: 0.55rem !important;
+    margin-top: 0.2rem !important;
+    letter-spacing: 1px !important;
   }
 }
