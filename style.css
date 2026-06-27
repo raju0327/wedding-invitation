@@ -1,6 +1,6 @@
 @font-face {
-  font-family: 'Ka Soori';
-  src: url('assets/Ka_Soori.ttf') format('truetype');
+  font-family: 'Ka Kalvettu';
+  src: url('assets/Ka_Kalvettu.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -109,7 +109,7 @@ body.lang-ta input,
 body.lang-ta select,
 body.lang-ta textarea,
 body.lang-ta span:not(.fa-solid):not(.fa-regular):not(.fa):not(.music-waves span) {
-  font-family: 'Ka Soori', 'Cinzel', Georgia, serif !important;
+  font-family: 'Ka Kalvettu', 'Cinzel', Georgia, serif !important;
 }
 
 h1, h2, h3, h4 {
@@ -491,8 +491,8 @@ h1, h2, h3, h4 {
   justify-content: center;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   transition: var(--transition-smooth);
-  font-family: 'Ka Soori', var(--font-serif);
-  font-size: 0.9rem;
+  font-family: var(--font-sans) !important;
+  font-size: 0.8rem !important;
   font-weight: bold;
 }
 
@@ -2955,18 +2955,18 @@ h1, h2, h3, h4 {
 
 @media screen and (max-width: 768px) {
   .music-btn {
-    bottom: 5.5rem !important;
+    bottom: 7rem !important;
     right: 1.5rem !important;
     width: 45px !important;
     height: 45px !important;
   }
   
   .lang-toggle {
-    bottom: 5.5rem !important;
+    bottom: 7rem !important;
     left: 1.5rem !important;
     width: 45px !important;
     height: 45px !important;
-    font-size: 0.75rem !important;
+    font-size: 0.7rem !important;
   }
 
   .section-container {
