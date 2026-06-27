@@ -115,6 +115,31 @@ class AmbientSynth {
 
 // --- Initialize Components ---
 document.addEventListener('DOMContentLoaded', () => {
+  // --- Language Toggle Setup ---
+  const langToggleBtn = document.getElementById('lang-toggle');
+  if (langToggleBtn) {
+    langToggleBtn.addEventListener('click', () => {
+      const newLang = window.currentLang === 'en' ? 'ta' : 'en';
+      window.translatePage(newLang);
+    });
+  }
+
+  document.addEventListener('languageChanged', (e) => {
+    const activeTab = document.querySelector('.hero-tab.active');
+    const heroDate = document.getElementById('hero-date');
+    const heroVenue = document.getElementById('hero-venue');
+    if (activeTab && heroDate && heroVenue) {
+      const countdownType = activeTab.getAttribute('data-countdown-type');
+      if (countdownType === 'engagement') {
+        heroDate.textContent = window.translations[e.detail.lang]['hero-date-engagement'];
+        heroVenue.textContent = window.translations[e.detail.lang]['hero-venue-engagement'];
+      } else if (countdownType === 'wedding') {
+        heroDate.textContent = window.translations[e.detail.lang]['hero-date-wedding'];
+        heroVenue.textContent = window.translations[e.detail.lang]['hero-venue-wedding'];
+      }
+    }
+  });
+
 
   // --- Floating Gold Particles Engine ---
   function initGoldParticles() {
@@ -472,12 +497,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (countdownType === 'engagement') {
         countdownDate = getISTTimestamp(2026, 7, 23, 18, 30);
-        heroDate.textContent = 'August 23, 2026';
-        heroVenue.textContent = 'Sri Om Chairma Thirumana Mandabam • Chennai, India';
+        heroDate.textContent = window.translations[window.currentLang]['hero-date-engagement'];
+        heroVenue.textContent = window.translations[window.currentLang]['hero-venue-engagement'];
       } else if (countdownType === 'wedding') {
         countdownDate = getISTTimestamp(2026, 9, 25, 7, 30);
-        heroDate.textContent = 'October 25, 2026';
-        heroVenue.textContent = 'Pothi Mahal • Gummidipoondi, Tamilnadu';
+        heroDate.textContent = window.translations[window.currentLang]['hero-date-wedding'];
+        heroVenue.textContent = window.translations[window.currentLang]['hero-venue-wedding'];
         
         if (isWeddingLocked()) {
           const wrapper = document.getElementById('hero-details-lock-wrapper');

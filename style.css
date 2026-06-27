@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Ka Soori';
+  src: url('assets/Ka_Soori.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* 
   Wedding Invitation Premium Design System
   Theme: Watercolor Emerald Green & Champagne Gold
@@ -85,6 +93,25 @@ body.no-scroll {
 }
 
 /* --- Typography --- */
+/* --- Tamil Translation Calligraphy Overrides --- */
+body.lang-ta,
+body.lang-ta p,
+body.lang-ta h1,
+body.lang-ta h2,
+body.lang-ta h3,
+body.lang-ta h4,
+body.lang-ta h5,
+body.lang-ta h6,
+body.lang-ta a,
+body.lang-ta button,
+body.lang-ta label,
+body.lang-ta input,
+body.lang-ta select,
+body.lang-ta textarea,
+body.lang-ta span:not(.fa-solid):not(.fa-regular):not(.fa):not(.music-waves span) {
+  font-family: 'Ka Soori', 'Cinzel', Georgia, serif !important;
+}
+
 h1, h2, h3, h4 {
   font-family: var(--font-serif);
   letter-spacing: 1px;
@@ -446,6 +473,34 @@ h1, h2, h3, h4 {
 }
 
 /* --- Floating Music Player --- */
+/* --- Floating Language Toggle --- */
+.lang-toggle {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  z-index: 100;
+  background-color: var(--primary);
+  border: 2px solid var(--secondary);
+  color: var(--secondary);
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: var(--transition-smooth);
+  font-family: 'Ka Soori', var(--font-serif);
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.lang-toggle:hover {
+  transform: scale(1.1);
+  background-color: #0c3e30;
+}
+
 .music-btn {
   position: fixed;
   bottom: 2rem;
@@ -2899,6 +2954,21 @@ h1, h2, h3, h4 {
 }
 
 @media screen and (max-width: 768px) {
+  .music-btn {
+    bottom: 5.5rem !important;
+    right: 1.5rem !important;
+    width: 45px !important;
+    height: 45px !important;
+  }
+  
+  .lang-toggle {
+    bottom: 5.5rem !important;
+    left: 1.5rem !important;
+    width: 45px !important;
+    height: 45px !important;
+    font-size: 0.75rem !important;
+  }
+
   .section-container {
     padding: 4rem 1.5rem;
   }
