@@ -114,6 +114,41 @@ body.lang-ta #lang-toggle {
   font-family: var(--font-sans) !important;
 }
 
+/* --- Tamil Mode Premium Size & Font Refinements --- */
+body.lang-ta .hero-couple-names {
+  font-size: 2.8rem !important;
+  line-height: 1.3 !important;
+}
+
+body.lang-ta .envelope-names {
+  font-size: 2.0rem !important;
+}
+
+body.lang-ta .nav-logo {
+  font-family: var(--font-cursive) !important;
+}
+
+body.lang-ta .note-message {
+  font-size: 1.25rem !important;
+  line-height: 1.5 !important;
+}
+
+body.lang-ta .guestbook-note {
+  min-height: 320px !important;
+}
+
+@media screen and (max-width: 768px) {
+  body.lang-ta .hero-couple-names {
+    font-size: 2.0rem !important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  body.lang-ta .hero-couple-names {
+    font-size: 1.7rem !important;
+  }
+}
+
 h1,
 h2,
 h3,
@@ -802,7 +837,7 @@ h4 {
 .hero-container {
   z-index: 2;
   width: 90%;
-  max-width: 800px;
+  max-width: fit-content;
   padding: 2rem;
 }
 
