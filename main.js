@@ -115,6 +115,24 @@ class AmbientSynth {
 
 // --- Initialize Components ---
 document.addEventListener('DOMContentLoaded', () => {
+  // Helper to translate text using free Google Translate API
+  async function translateText(text, targetLang) {
+    if (!text || text.trim() === "") return text;
+    try {
+      const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('API error');
+      const data = await res.json();
+      if (data && data[0]) {
+        return data[0].map(x => x[0]).join('');
+      }
+      return text;
+    } catch (err) {
+      console.warn('Client-side translation failed:', err);
+      return text;
+    }
+  }
+
   // --- Language Toggle Setup ---
   const langToggleBtn = document.getElementById('lang-toggle');
   if (langToggleBtn) {
@@ -718,19 +736,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const localMessages = JSON.parse(localStorage.getItem('wedding_wishes')) || [];
 
     // Clear wall and show loaded items
-    function displayWishes(customWishes) {
+        function displayWishes(customWishes) {
       guestbookWall.innerHTML = '';
 
-            customWishes.forEach((w, idx) => {
+      customWishes.forEach((w, idx) => {
         const note = document.createElement('div');
         const colorTheme = idx % 2 === 0 ? 'note-emerald' : 'note-gold';
         note.className = `guestbook-note glass-card ${colorTheme}`;
 
         let displayWishText = w.wishes;
-        if (window.currentLang === 'ta' && w.wishes_ta) {
-          displayWishText = w.wishes_ta;
-        } else if (window.currentLang === 'en' && w.wishes_en) {
-          displayWishText = w.wishes_en;
+        let needsTranslation = false;
+        let targetLang = 'en';
+
+        if (window.currentLang === 'ta') {
+          if (w.wishes_ta) {
+            displayWishText = w.wishes_ta;
+          } else {
+            needsTranslation = true;
+            targetLang = 'ta';
+          }
+        } else if (window.currentLang === 'en') {
+          if (w.wishes_en) {
+            displayWishText = w.wishes_en;
+          } else {
+            // Only translate if the original has Tamil characters
+            const hasTamil = /[\u0B80-\u0BFF]/.test(w.wishes);
+            if (hasTamil) {
+              needsTranslation = true;
+              targetLang = 'en';
+            }
+          }
         }
 
         note.innerHTML = `
@@ -742,6 +777,15 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         `;
         guestbookWall.appendChild(note);
+
+        if (needsTranslation) {
+          const msgEl = note.querySelector('.note-message');
+          translateText(w.wishes, targetLang).then(translated => {
+            if (msgEl && translated) {
+              msgEl.textContent = translated;
+            }
+          });
+        }
       });
     }
 
@@ -1178,30 +1222,44 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Handle Guestbook Form Submit (Posting directly from wall)
-  guestbookForm.addEventListener('submit', (e) => {
+    guestbookForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const name = document.getElementById('gb-name').value;
     const wishes = document.getElementById('gb-message').value;
     const timestamp = new Date().toISOString();
 
-        const wishData = {
-      type: 'wish',
-      name,
-      wishes,
-      lang: window.currentLang,
-      timestamp
-    };
-
     const submitBtn = guestbookForm.querySelector('button[type="submit"]');
     const originalText = submitBtn.textContent;
     submitBtn.textContent = 'Posting...';
     submitBtn.disabled = true;
 
+    // Pre-translate client-side
+    let wishes_ta = wishes;
+    let wishes_en = wishes;
+    const currentLang = window.currentLang || 'en';
+    if (currentLang === 'ta') {
+      wishes_ta = wishes;
+      wishes_en = await translateText(wishes, 'en');
+    } else {
+      wishes_en = wishes;
+      wishes_ta = await translateText(wishes, 'ta');
+    }
+
+    const wishData = {
+      type: 'wish',
+      name,
+      wishes,
+      wishes_ta,
+      wishes_en,
+      lang: currentLang,
+      timestamp
+    };
+
     function completeWishSubmission() {
       // Save locally
       const customMessages = JSON.parse(localStorage.getItem('wedding_wishes')) || [];
-      customMessages.push({ name, wishes, timestamp });
+      customMessages.push({ name, wishes, wishes_ta, wishes_en, timestamp });
       localStorage.setItem('wedding_wishes', JSON.stringify(customMessages));
 
       // Clear inputs
