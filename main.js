@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const activeTab = document.querySelector('.hero-tab.active');
     const heroDate = document.getElementById('hero-date');
     const heroVenue = document.getElementById('hero-venue');
-    if (activeTab && heroDate && heroVenue) {
+        if (activeTab && heroDate && heroVenue) {
       const countdownType = activeTab.getAttribute('data-countdown-type');
       if (countdownType === 'engagement') {
         heroDate.textContent = window.translations[e.detail.lang]['hero-date-engagement'];
@@ -137,6 +137,9 @@ document.addEventListener('DOMContentLoaded', () => {
         heroDate.textContent = window.translations[e.detail.lang]['hero-date-wedding'];
         heroVenue.textContent = window.translations[e.detail.lang]['hero-venue-wedding'];
       }
+    }
+    if (typeof renderGuestbook === 'function') {
+      renderGuestbook();
     }
   });
 
@@ -718,15 +721,22 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayWishes(customWishes) {
       guestbookWall.innerHTML = '';
 
-      customWishes.forEach((w, idx) => {
+            customWishes.forEach((w, idx) => {
         const note = document.createElement('div');
         const colorTheme = idx % 2 === 0 ? 'note-emerald' : 'note-gold';
         note.className = `guestbook-note glass-card ${colorTheme}`;
 
+        let displayWishText = w.wishes;
+        if (window.currentLang === 'ta' && w.wishes_ta) {
+          displayWishText = w.wishes_ta;
+        } else if (window.currentLang === 'en' && w.wishes_en) {
+          displayWishText = w.wishes_en;
+        }
+
         note.innerHTML = `
           <div class="note-inner-frame">
             <div class="note-quote-icon top-quote"><i class="fa-solid fa-quote-left"></i></div>
-            <p class="note-message">${w.wishes}</p>
+            <p class="note-message">${displayWishText}</p>
             <div class="note-quote-icon bottom-quote"><i class="fa-solid fa-quote-right"></i></div>
             <p class="note-author">— ${w.name}</p>
           </div>
@@ -1175,10 +1185,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const wishes = document.getElementById('gb-message').value;
     const timestamp = new Date().toISOString();
 
-    const wishData = {
+        const wishData = {
       type: 'wish',
       name,
       wishes,
+      lang: window.currentLang,
       timestamp
     };
 
