@@ -1,10 +1,6 @@
-@font-face {
-  font-family: 'Ka Kalvettu';
-  src: url('assets/Ka_Kalvettu.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@300;400;500;600;700&family=Mukta+Malar:wght@300;400;500;600;700&display=swap');
+
+
 
 /* 
   Wedding Invitation Premium Design System
@@ -96,16 +92,16 @@ body.no-scroll {
 /* --- Tamil Translation Calligraphy Overrides --- */
 body.lang-ta,
 body.lang-ta *:not(i):not(.fa):not(.fas):not(.far):not(.fab):not(.fa-solid):not(.fa-regular):not(.music-waves span) {
-  font-family: 'Ka Kalvettu', 'Cinzel', Georgia, serif !important;
+  font-family: 'Noto Sans Tamil', 'Mukta Malar', 'Cinzel', Georgia, serif !important;
 }
 
 body.lang-ta input::placeholder,
 body.lang-ta textarea::placeholder {
-  font-family: 'Ka Kalvettu', 'Cinzel', Georgia, serif !important;
+  font-family: 'Noto Sans Tamil', 'Mukta Malar', 'Cinzel', Georgia, serif !important;
 }
 
 body:not(.lang-ta) #lang-toggle {
-  font-family: 'Ka Kalvettu', var(--font-sans) !important;
+  font-family: 'Noto Sans Tamil', 'Mukta Malar', var(--font-sans) !important;
 }
 
 body.lang-ta #lang-toggle {
