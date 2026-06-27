@@ -95,21 +95,21 @@ body.no-scroll {
 /* --- Typography --- */
 /* --- Tamil Translation Calligraphy Overrides --- */
 body.lang-ta,
-body.lang-ta p,
-body.lang-ta h1,
-body.lang-ta h2,
-body.lang-ta h3,
-body.lang-ta h4,
-body.lang-ta h5,
-body.lang-ta h6,
-body.lang-ta a,
-body.lang-ta button,
-body.lang-ta label,
-body.lang-ta input,
-body.lang-ta select,
-body.lang-ta textarea,
-body.lang-ta span:not(.fa-solid):not(.fa-regular):not(.fa):not(.music-waves span) {
+body.lang-ta *:not(i):not(.fa):not(.fas):not(.far):not(.fab):not(.fa-solid):not(.fa-regular):not(.music-waves span) {
   font-family: 'Ka Kalvettu', 'Cinzel', Georgia, serif !important;
+}
+
+body.lang-ta input::placeholder,
+body.lang-ta textarea::placeholder {
+  font-family: 'Ka Kalvettu', 'Cinzel', Georgia, serif !important;
+}
+
+body:not(.lang-ta) #lang-toggle {
+  font-family: 'Ka Kalvettu', var(--font-sans) !important;
+}
+
+body.lang-ta #lang-toggle {
+  font-family: var(--font-sans) !important;
 }
 
 h1, h2, h3, h4 {

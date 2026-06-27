@@ -127,6 +127,8 @@ window.translations = {
     "gb-placeholder-msg": "Type your congratulations here...",
     "gb-btn-post": "Post Blessing",
     "wishes-title": "Wishes & Blessings Wall",
+    "wishes-subtitle": "Blessings and messages from our family and friends.",
+    "wishes-loading": "Loading wishes...",
     
     "footer-tagline": "Two hearts united in love and faith. We look forward to celebrating our wedding journey with you.",
     "footer-signoff": "With Love,",
@@ -141,7 +143,7 @@ window.translations = {
     "nav-guestbook": "வாழ்த்துப் புத்தகம்",
     "nav-wishes": "வாழ்த்துகள்",
     
-    "env-subtitle": "திருமணம் அழைப்பிதழ்",
+    "env-subtitle": "திருமண அழைப்பிதழ்",
     "env-names": "வேதா கிஷோர் ராஜ் & சீதாலட்சுமி",
     "env-prompt": "உங்களை அன்போடு அழைக்கிறோம்",
     "env-action": "திறக்க கிளிக் செய்யவும்",
@@ -209,11 +211,6 @@ window.translations = {
     "event-reception-title": "வரவேற்பு விழா",
     "event-reception-time": "அக்டோபர் 24 • மாலை 7:30 முதல் 9:30 வரை",
     "event-reception-location": "போத்தி மஹால், கும்மிடிப்பூண்டி",
-    "event-reception-desc": "Join us immediately following the pre-wedding celebrations for a grand reception dinner, live music, and congratulations under the chandeliers.",
-    
-    "event-reception-title": "வரவேற்பு விழா",
-    "event-reception-time": "அக்டோபர் 24 • மாலை 7:30 முதல் 9:30 வரை",
-    "event-reception-location": "போத்தி மஹால், கும்மிடிப்பூண்டி",
     "event-reception-desc": "திருமணத்திற்கு முந்தைய இந்த வரவேற்பு நல்விழாவில் சுவையான விருந்து மற்றும் இனிய இசையுடன் எங்களை வாழ்த்தி மகிழ்விக்க அன்போடு அழைக்கிறோம்.",
     
     "event-mugurtham-title": "திருமண முகூர்த்தம்",
@@ -226,14 +223,12 @@ window.translations = {
     "travel-title": "தங்குமிடம் & பயணம்",
     "travel-tagline": "நீங்கள் தங்குவதற்கும் பயணத்திற்கும் தேவையான தகவல்கள்",
     
-    "travel-stay-title": "Where to Stay",
     "travel-stay-title": "தங்கும் வசதி",
     "travel-stay-location": "எம் ஆர் ரெசிடென்சி, சென்னை",
     "travel-stay-desc": "திருமண மண்டபத்திற்கு மிக அருகில் (சுமார் 5-10 நிமிட பயண தூரம்) அமைந்துள்ள இந்த தங்குமிடத்தில் அனைத்து வசதிகளும் எங்களுடைய விருந்தினர்களுக்காக செய்யப்பட்டுள்ளது.",
     "travel-stay-map-btn": "வரைபடத்தில் தங்குமிடம்",
     "travel-coordinator": "பதிவு மற்றும் உதவிக்கு, எங்களது ஒருங்கிணைப்பாளரைத் தொடர்பு கொள்ளவும்: +91 98765 43210",
     
-    "travel-getting-title": "Getting There",
     "travel-getting-title": "பயண வழிகள்",
     "travel-by-air": "விமானம் மூலம்",
     "travel-by-air-desc": "சென்னை சர்வதேச விமான நிலையம் (MAA) திருமண மண்டபத்திற்கு அருகில் அமைந்துள்ள விமான நிலையம் ஆகும்.",
@@ -243,7 +238,6 @@ window.translations = {
     "travel-by-cab-desc": "விமான நிலையம் மற்றும் இரயில் நிலையங்களில் இருந்து நேரடியாக வர உபர் (Uber), ஓலா (Ola) போன்ற கார் வசதிகள் உள்ளன.",
     
     "special-msg-title": "விருந்தினர்களுக்கான சிறப்புச் செய்தி",
-    "special-msg-p1": "Your presence is the greatest gift we could ever receive.",
     "special-msg-p1": "உங்களது வருகையே நாங்கள் பெறும் மிகச்சிறந்த பரிசாகும்.",
     "special-msg-p2": "எங்கள் திருமணப் பயணத்தைத் தொடங்கும் இந்த மங்கல நாளில், உங்களது அன்பு, ஆதரவு மற்றும் ஆசிகளைப் பெறுவதில் நாங்கள் பெருமகிழ்ச்சி அடைகிறோம்.",
     "special-msg-p3": "இந்த நாள் எங்களது இணைப்பை மட்டும் குறிப்பதல்ல; எங்களது குடும்பங்கள், நட்பு மற்றும் உறவுகளின் அன்போடு எங்கள் வாழ்க்கையைத் தொடங்குவதாகும்.",
@@ -261,14 +255,16 @@ window.translations = {
     "gallery-engagement": "நிச்சயதார்த்தம்",
     "gallery-prewedding": "திருமணத்திற்கு முந்தைய",
     
-    "guestbook-title": "வாழ்த்துப் புத்தகம்",
-    "guestbook-tagline": "தம்பதியருக்காக உங்களது அன்பு செய்தியையும் ஆசிகளையும் இடுகையிடுக",
-    "gb-label-name": "உங்கள் பெயர்",
-    "gb-placeholder-name": "பெயரை உள்ளிடவும்",
-    "gb-label-msg": "உங்கள் வாழ்த்துச் செய்தி",
-    "gb-placeholder-msg": "இங்கே உங்களது வாழ்த்துகளை எழுதவும்...",
-    "gb-btn-post": "வாழ்த்தை இடுகையிடுக",
+    "guestbook-title": "நல்வாழ்த்துப் பதிவேடு",
+    "guestbook-tagline": "மணமக்களுக்கு உங்களது அன்பான வாழ்த்துகளையும் ஆசிகளையும் பகிர்ந்து கொள்ளுங்கள்",
+    "gb-label-name": "உங்களது பெயர்",
+    "gb-placeholder-name": "உங்களது பெயரை உள்ளிடவும்",
+    "gb-label-msg": "உங்களது நல்வாழ்த்துகள் / செய்தி",
+    "gb-placeholder-msg": "உங்களது நல்வாழ்த்துகளை இங்கே எழுதவும்...",
+    "gb-btn-post": "வாழ்த்தைப் பதிவிடவும்",
     "wishes-title": "அன்பானவர்களின் வாழ்த்துச் சுவர்",
+    "wishes-subtitle": "குடும்பத்தினர் மற்றும் நண்பர்களின் வாழ்த்துகள் மற்றும் ஆசிகள்.",
+    "wishes-loading": "வாழ்த்துகள் ஏற்றப்படுகின்றன...",
     
     "footer-tagline": "இரு இதயங்கள் அன்பிலும் நம்பிக்கையிலும் இணைகின்றன. எங்களது திருமணப் பயணத்தில் உங்களுடன் கொண்டாடுவதை எதிர்நோக்குகிறோம்.",
     "footer-signoff": "அன்புடன்,",
@@ -285,6 +281,12 @@ window.translatePage = function(lang) {
   
   // Toggle class on body
   document.body.classList.toggle('lang-ta', lang === 'ta');
+  
+  // Update toggle button visual state (English -> தமிழ், Tamil -> English)
+  const langToggle = document.getElementById('lang-toggle');
+  if (langToggle) {
+    langToggle.textContent = lang === 'ta' ? 'English' : 'தமிழ்';
+  }
 
   const trans = window.translations[lang];
   if (!trans) return;
