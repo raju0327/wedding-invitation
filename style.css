@@ -2970,7 +2970,7 @@ h4 {
 .shimmer-sweep {
   position: absolute;
   top: 0;
-  left: -150%;
+  left: 0;
   width: 50%;
   height: 100%;
   background: linear-gradient(90deg,
@@ -2979,23 +2979,24 @@ h4 {
       rgba(255, 224, 102, 0.22) 50%,
       rgba(255, 255, 255, 0.15) 70%,
       transparent);
-  transform: skewX(-25deg);
+  transform: translateX(-150%) skewX(-25deg);
   pointer-events: none;
   z-index: 5;
   animation: shimmer-loop 6s infinite ease-in-out;
+  will-change: transform;
 }
 
 @keyframes shimmer-loop {
   0% {
-    left: -150%;
+    transform: translateX(-150%) skewX(-25deg);
   }
 
   35% {
-    left: 150%;
+    transform: translateX(350%) skewX(-25deg);
   }
 
   100% {
-    left: 150%;
+    transform: translateX(350%) skewX(-25deg);
   }
 }
 
